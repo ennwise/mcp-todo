@@ -76,7 +76,7 @@
         * **Expected Output:** Documented initial impact analysis.
         * **Acceptance Criteria:** Potential negative impacts are clearly listed.
     * [X] **Activity 1.3:** Log Technical Debt Item
-        * **Description:** Create a formal record for the technical debt item in a tracking system (e.g., dedicated backlog, `task-manager-server`).
+        * **Description:** Create a formal record for the technical debt item in a tracking system (e.g., dedicated backlog, `project-task-manager`).
         * **Typical Mode(s) Responsible:** LeadDeveloperMode, DeveloperMode.
         * **Task Checklist:**
             * [ ] Assign a unique ID.
@@ -85,7 +85,7 @@
             * [ ] Link to related issues or areas of code.
         * **Expected Output:** Technical debt item logged.
         * **Acceptance Criteria:** Item is formally tracked with all available details.
-* **Tools & Resources:** `task-manager-server` (or dedicated tech debt backlog), code analysis tools, IDEs.
+* **Tools & Resources:** `project-task-manager` (or dedicated tech debt backlog), code analysis tools, IDEs.
 * **Deliverables & Outputs for this Phase (Checklist):**
     * [X] Deliverable 1.A: Technical Debt Item Record created in the tracking system.
         * **Description:** A structured document or ticket detailing the specific debt.
@@ -131,7 +131,7 @@
         * **Description:** If the decision is to fix, choose the preferred refactoring solution from the brainstormed options.
         * **Typical Mode(s) Responsible:** LeadDeveloperMode, ArchitectMode, Senior DeveloperMode(s).
         * **Expected Output:** Selected refactoring approach documented.
-* **Tools & Resources:** `task-manager-server`, collaborative tools, effort estimation techniques.
+* **Tools & Resources:** `project-task-manager`, collaborative tools, effort estimation techniques.
 * **Deliverables & Outputs for this Phase (Checklist):**
     * [X] Deliverable 2.A: Updated Technical Debt Item Record with detailed impact/effort analysis, prioritization, decision, and selected solution approach (if applicable).
 * **Success Criteria for Phase (Definition of Done for Phase):**
@@ -159,10 +159,10 @@
         * **Description:** Break down the refactoring effort into small, manageable tasks.
         * **Typical Mode(s) Responsible:** LeadDeveloperMode, DeveloperMode(s).
         * **Task Checklist:**
-            * [ ] Create tasks in `task-manager-server` (e.g., "Add characterization tests," "Refactor class X," "Update dependent modules," "Performance test changes").
+            * [ ] Create tasks in `project-task-manager` (e.g., "Add characterization tests," "Refactor class X," "Update dependent modules," "Performance test changes").
             * [ ] Estimate effort for each task.
             * [ ] Identify dependencies.
-        * **Expected Output:** Detailed task plan in `task-manager-server`.
+        * **Expected Output:** Detailed task plan in `project-task-manager`.
     * [X] **Activity 3.3:** Define Testing Strategy
         * **Description:** Outline how the refactoring will be tested to ensure correctness and prevent regressions. This is critical.
         * **Typical Mode(s) Responsible:** LeadDeveloperMode, DeveloperMode(s), QAMode.
@@ -179,11 +179,11 @@
             * [ ] Develop rollback plan if issues arise post-deployment.
             * [ ] Plan for communication with potentially affected teams.
         * **Expected Output:** Risk mitigation and rollback plan.
-* **Tools & Resources:** `task-manager-server`, version control, testing frameworks, documentation tools.
+* **Tools & Resources:** `project-task-manager`, version control, testing frameworks, documentation tools.
 * **Deliverables & Outputs for this Phase (Checklist):**
     * [X] Deliverable 3.A: Detailed Refactoring Plan, including:
         * Scope and Acceptance Criteria.
-        * Task breakdown in `task-manager-server`.
+        * Task breakdown in `project-task-manager`.
         * Testing Strategy.
         * Risk Mitigation and Rollback Plan.
 * **Success Criteria for Phase (Definition of Done for Phase):**
@@ -213,7 +213,7 @@
             * [ ] Run all tests (unit, characterization, integration).
             * [ ] If tests pass, commit. If not, revert or fix.
             * [ ] Repeat.
-            * [ ] Update task status in `task-manager-server`.
+            * [ ] Update task status in `project-task-manager`.
         * **Expected Output:** Refactored code.
     * [X] **Activity 4.3:** Write/Update Unit & Integration Tests
         * **Description:** Ensure comprehensive test coverage for the newly refactored code.
@@ -231,7 +231,7 @@
             * [ ] Perform regression testing on impacted system parts.
             * [ ] Log any issues found (ideally none, or minor ones easily fixed).
         * **Expected Output:** QA validation report.
-* **Tools & Resources:** IDEs, version control, testing frameworks, CI/CD, `task-manager-server`, code review tools.
+* **Tools & Resources:** IDEs, version control, testing frameworks, CI/CD, `project-task-manager`, code review tools.
 * **Deliverables & Outputs for this Phase (Checklist):**
     * [X] Deliverable 4.A: Refactored source code committed to version control.
     * [X] Deliverable 4.B: Comprehensive test suite (unit, integration, characterization) with passing results.
@@ -272,7 +272,7 @@
     * [X] **Activity 5.4:** Update Technical Debt Item Record
         * **Description:** Mark the technical debt item as "Resolved" or "Closed" in the tracking system, documenting the outcome and actual benefits observed.
         * **Typical Mode(s) Responsible:** LeadDeveloperMode.
-* **Tools & Resources:** Deployment tools (CI/CD), production monitoring tools, analytics platforms, `task-manager-server`.
+* **Tools & Resources:** Deployment tools (CI/CD), production monitoring tools, analytics platforms, `project-task-manager`.
 * **Deliverables & Outputs for this Phase (Checklist):**
     * [X] Deliverable 5.A: Refactored code live in production.
     * [X] Deliverable 5.B: Post-Deployment Validation Report.
@@ -287,8 +287,8 @@
 
 ## 5. Key Artifacts Managed Throughout Workflow
 
-* [X] **Technical Debt Item Record:** (In `task-manager-server` or dedicated backlog) Central record for each piece of debt.
-* [X] **Refactoring Plan:** (Document or notes in `task-manager-server`) Details scope, tasks, testing, risks.
+* [X] **Technical Debt Item Record:** (In `project-task-manager` or dedicated backlog) Central record for each piece of debt.
+* [X] **Refactoring Plan:** (Document or notes in `project-task-manager`) Details scope, tasks, testing, risks.
 * [X] **Test Suites:** (Unit, integration, characterization tests in version control).
 * [X] **Monitoring Data & Impact Reports:** (Analytics, performance dashboards, summary reports).
 

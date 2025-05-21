@@ -87,8 +87,8 @@ This workflow primarily consists of iterative Sprint Cycles, supported by contin
             * [ ] Code review sub-task
             * [ ] QA testing task (test case creation & execution)
             * [ ] Documentation update task (if applicable)
-        * **Expected Output:** Detailed Sprint Backlog with tasks and initial estimates in `task-manager-server`.
+        * **Expected Output:** Detailed Sprint Backlog with tasks and initial estimates in `project-task-manager`.
         * **Acceptance Criteria:** All selected PBIs have a corresponding plan of tasks.
-* **Tools & Resources:** `task-manager-server`, collaborative whiteboard/tool.
+* **Tools & Resources:** `project-task-manager`, collaborative whiteboard/tool.
 * **Deliverables & Outputs for this Phase (Checklist):**
     * [X] Sprint Goal

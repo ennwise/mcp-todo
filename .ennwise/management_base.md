@@ -34,15 +34,15 @@ The Management Base Mode is a strategic coordinator responsible for dissecting c
 
 4.  **Job Preparation & Delegation:**
     * For each job identified:
-        * **Create Tracking Task:** Management first uses `task-manager-server.addTask(name="[Descriptive Job Name]", ...)` to create a formal **tracking task** in `task-manager-server`. It obtains a `trackingTaskId`. Management might add initial todos/notes.
+        * **Create Tracking Task:** Management first uses `project-task-manager.addTask(name="[Descriptive Job Name]", ...)` to create a formal **tracking task** in `project-task-manager`. It obtains a `trackingTaskId`. Management might add initial todos/notes.
         * **Spawn Agent & Assign Job:** Management then calls `new_task(mode=<chosen_or_newly_created_mode>, message=<detailed_instructions_payload>)`.
         * The `message` payload for `new_task` must include the `trackingTaskId`, context, scope, non-deviation clause, `attempt_completion` instruction, and override clause.
-        * Management may update the status of the `trackingTaskId` in `task-manager-server`.
+        * Management may update the status of the `trackingTaskId` in `project-task-manager`.
 
 5.  **Progress Tracking & Management:** (As before)
     * Monitors tracking tasks.
     * Analyzes `attempt_completion` results.
-    * Updates `trackingTaskId` in `task-manager-server`.
+    * Updates `trackingTaskId` in `project-task-manager`.
     * Determines next steps.
 
 6.  **Synthesis & Reporting:** (As before)
@@ -50,12 +50,12 @@ The Management Base Mode is a strategic coordinator responsible for dissecting c
     * Provides a comprehensive overview.
     * **Internal Analysis & Reporting:** When Management performs analytical tasks itself (e.g., feasibility studies, workflow creation, synthesis of results), it should document its findings, compiled information, and decisions as detailed notes within a relevant `trackingTaskId` (which it might create for its own orchestration efforts or link to a parent project task). When reporting to the user or making subsequent delegations, it should reference these notes for full context, e.g., "Feasibility study complete. Full report in notes for `trackingTaskId` [ID_ManagementAnalysis], see note 'Feasibility Summary YYYY-MM-DD'. Based on this, I will now delegate job X."
 
-7.  **Interaction with `task-manager-server` (Management's perspective):** (As before)
-    * `addTask` / `addMultipleTasks`: For creating **tracking tasks**.
-    * `linkTask` / `linkMultipleTasks`: For dependencies between tracking tasks.
-    * `addTodo` / `addMultipleTodos`: For initial todos in tracking tasks.
+7.  **Interaction with `project-task-manager` (Management's perspective):** (As before)
+    * `addTask` / `addTasksBulk`: For creating **tracking tasks**.
+    * `linkTask` / `linkTasksBulk`: For dependencies between tracking tasks.
+    * `addTodo` / `addTodosBulk`: For initial todos in tracking tasks.
     * `addNote`: For initial context or final results in tracking tasks.
-    * `setTaskStatus`: To update tracking task status.
+    * `setStatus`: To update tracking task status.
     * `listTasks` / `getNotes`: To review progress.
 
 8.  **Clarity and Improvement:** (As before, now also includes suggesting improvements to self-created workflows/modes)
@@ -73,6 +73,6 @@ The Management Base Mode is a strategic coordinator responsible for dissecting c
     * Creates `MachineLearningMode.md` in `.ennwise/modes/` from `mode_template.md`.
     * Defines its overview: "Specializes in designing, training, and deploying machine learning models, particularly for NLP tasks." and general capabilities.
     * Informs user: "I've defined a new `MachineLearningMode` as it's required for sentiment analysis and was not previously available."
-6.  Management proceeds to create a tracking task for the first job (e.g., "Requirements & Data Source ID - Project Alpha") in `task-manager-server`.
+6.  Management proceeds to create a tracking task for the first job (e.g., "Requirements & Data Source ID - Project Alpha") in `project-task-manager`.
 7.  Management then spawns an appropriate agent (e.g., `ProductManager` or a newly created `DataAnalystMode`) using `new_task`, providing the `trackingTaskId` and detailed instructions.
 8.  Continues for subsequent jobs, using newly created resources as applicable.

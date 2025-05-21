@@ -172,7 +172,7 @@
 
 ## 5. Tools & Technologies (Optional)
 
-* **Task Management:** [e.g., task-manager-server, Jira, Asana, Trello]
+* **Task Management:** [e.g., project-task-manager, Jira, Asana, Trello]
 * **Document Management:** [e.g., Confluence, SharePoint, Google Drive]
 * **Diagramming (for WBS, flowcharts):** [e.g., Lucidchart, draw.io, Visio]
 * **Communication:** [e.g., Slack, Microsoft Teams, Email]

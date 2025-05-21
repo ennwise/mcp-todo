@@ -77,7 +77,7 @@
     * [X] **Activity 1.5:** Specify Initial Non-Functional Requirements (NFRs)
         * **Description:** Outline expected performance, security, scalability, availability.
         * **Typical Mode(s) Responsible:** ArchitectMode, ProductManagerMode.
-* **Tools & Resources:** `task-manager-server`, collaborative documentation tools, diagramming tools.
+* **Tools & Resources:** `project-task-manager`, collaborative documentation tools, diagramming tools.
 * **Deliverables & Outputs for this Phase (Checklist):**
     * [X] Deliverable 1.A: API Requirements Document (or detailed PBI/Epic).
         * **Contents:** Consumer personas, business goals, use cases/user stories, high-level data needs, initial NFRs.
@@ -123,7 +123,7 @@
             * [ ] Review for clarity, consistency, completeness, usability.
             * [ ] Security review.
             * [ ] Performance considerations review.
-* **Tools & Resources:** API design tools (e.g., Swagger Editor, Stoplight, Postman), `task-manager-server`, collaborative platforms.
+* **Tools & Resources:** API design tools (e.g., Swagger Editor, Stoplight, Postman), `project-task-manager`, collaborative platforms.
 * **Deliverables & Outputs for this Phase (Checklist):**
     * [X] Deliverable 2.A: Formal API Contract/Specification (e.g., OpenAPI v3 file).
     * [X] Deliverable 2.B: API Design Document (supplementing the contract with rationale, architectural decisions, etc.).
@@ -145,7 +145,7 @@
         * **Description:** Choose appropriate programming languages, frameworks, and tools for implementing the API.
         * **Typical Mode(s) Responsible:** LeadDeveloperMode, ArchitectMode.
     * [X] **Activity 3.2:** Break Down Implementation into Tasks
-        * **Description:** Create detailed development tasks for each endpoint, data model, authentication logic, etc., in `task-manager-server`.
+        * **Description:** Create detailed development tasks for each endpoint, data model, authentication logic, etc., in `project-task-manager`.
         * **Typical Mode(s) Responsible:** LeadDeveloperMode, DeveloperMode(s).
     * [X] **Activity 3.3:** Estimate Effort & Define Sprints/Iterations
         * **Description:** Estimate effort for tasks and group them into logical development cycles.
@@ -153,9 +153,9 @@
     * [X] **Activity 3.4:** Define API Testing Strategy
         * **Description:** Detail how different aspects of the API will be tested (unit, integration, contract, performance, security).
         * **Typical Mode(s) Responsible:** LeadDeveloperMode, QAMode.
-* **Tools & Resources:** `task-manager-server`, project planning tools.
+* **Tools & Resources:** `project-task-manager`, project planning tools.
 * **Deliverables & Outputs for this Phase (Checklist):**
-    * [X] Deliverable 3.A: API Development Plan (task list with estimates in `task-manager-server`).
+    * [X] Deliverable 3.A: API Development Plan (task list with estimates in `project-task-manager`).
     * [X] Deliverable 3.B: Confirmed Technology Stack.
     * [X] Deliverable 3.C: Detailed API Testing Strategy.
 * **Success Criteria for Phase (Definition of Done for Phase):**
@@ -191,7 +191,7 @@
     * [X] **Activity 4.5:** Code Reviews
         * **Description:** Peer review of API implementation code.
         * **Typical Mode(s) Responsible:** LeadDeveloperMode, DeveloperMode(s).
-* **Tools & Resources:** IDEs, API frameworks, version control, CI/CD, unit/integration testing tools, contract testing tools, `task-manager-server`.
+* **Tools & Resources:** IDEs, API frameworks, version control, CI/CD, unit/integration testing tools, contract testing tools, `project-task-manager`.
 * **Deliverables & Outputs for this Phase (Checklist):**
     * [X] Deliverable 4.A: Working API implementation committed to version control.
     * [X] Deliverable 4.B: Comprehensive suite of unit, integration, and contract tests with passing results.
@@ -311,7 +311,7 @@
     * [X] **Activity 8.4:** Plan Next API Version or Enhancements (if applicable)
         * **Description:** If significant changes or new features are needed, initiate a new cycle of this workflow for the next version.
         * **Typical Mode(s) Responsible:** ProductManagerMode, ArchitectMode.
-* **Tools & Resources:** Monitoring dashboards, analytics tools, feedback channels, `task-manager-server` (for new requirements).
+* **Tools & Resources:** Monitoring dashboards, analytics tools, feedback channels, `project-task-manager` (for new requirements).
 * **Deliverables & Outputs for this Phase (Checklist):**
     * [X] Deliverable 8.A: API Performance & Usage Reports.
     * [X] Deliverable 8.B: Consumer Feedback Summary.

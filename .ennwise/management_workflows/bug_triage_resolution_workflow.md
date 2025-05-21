@@ -67,7 +67,7 @@
         * **Expected Output:** Comprehensive raw bug information.
         * **Acceptance Criteria:** Sufficient detail provided to potentially reproduce the issue.
     * [X] **Activity 1.2:** Log Bug in Tracking System
-        * **Description:** Create a new bug record in the designated bug tracking system (or `task-manager-server`).
+        * **Description:** Create a new bug record in the designated bug tracking system (or `project-task-manager`).
         * **Typical Mode(s) Responsible:** UserSupportMode, QAMode, DeveloperMode.
         * **Task Checklist:**
             * [ ] Assign a unique ID (usually automatic).
@@ -76,11 +76,11 @@
             * [ ] Link to related tasks or features if known.
         * **Expected Output:** New bug record created.
         * **Acceptance Criteria:** Bug is logged with all available details and has a unique identifier.
-* **Tools & Resources:** Bug tracking system (e.g., Jira, Bugzilla) or `task-manager-server`, screen capture tools.
+* **Tools & Resources:** Bug tracking system (e.g., Jira, Bugzilla) or `project-task-manager`, screen capture tools.
 * **Deliverables & Outputs for this Phase (Checklist):**
     * [X] Deliverable 1.A: New Bug Report created in the tracking system.
         * **Description:** A formal record of the potential defect.
-        * **Format:** Entry in bug tracker / `task-manager-server`.
+        * **Format:** Entry in bug tracker / `project-task-manager`.
 * **Success Criteria for Phase (Definition of Done for Phase):**
     * [X] Bug is logged with clear, detailed information sufficient for initial review.
     * [X] All mandatory fields in the bug report are completed.
@@ -289,7 +289,7 @@
 
 ## 5. Key Artifacts Managed Throughout Workflow
 
-* [X] **Bug Report/Ticket:** (Maintained in bug tracking system or `task-manager-server`) The central record for all information related to a specific bug.
+* [X] **Bug Report/Ticket:** (Maintained in bug tracking system or `project-task-manager`) The central record for all information related to a specific bug.
 * [X] **Test Cases (for verification & regression):** (Maintained by QAMode in test case management system or documentation).
 * [X] **Code Changes & Unit Tests:** (Maintained in version control by DeveloperMode(s)).
 * [X] **Bug Triage Meeting Notes/Decisions:** (Often captured in bug tracker or team wiki).

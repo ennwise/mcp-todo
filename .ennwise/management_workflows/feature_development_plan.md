@@ -77,14 +77,14 @@
             * [ ] Identify major potential risks (technical, market, resource).
         * **Expected Output:** Feasibility Report/Summary.
         * **Acceptance Criteria:** Clear "go/no-go" recommendation or identified areas needing further investigation.
-* **Tools & Resources:** `task-manager-server` (for creating tracking tasks for this phase), collaborative documents.
+* **Tools & Resources:** `project-task-manager` (for creating tracking tasks for this phase), collaborative documents.
 * **Deliverables & Outputs for this Phase (Checklist):**
     * [X] Deliverable 1.A: Initial Feature Scope Document / High-Level PBI
         * **Description:** Document outlining the feature's purpose, target users, core functions, value, and success metrics.
-        * **Format:** Markdown file or detailed entry in `task-manager-server` notes.
+        * **Format:** Markdown file or detailed entry in `project-task-manager` notes.
     * [X] Deliverable 1.B: Feasibility Summary
         * **Description:** Brief report on technical feasibility, resource needs, and risks.
-        * **Format:** Markdown snippet or `task-manager-server` note.
+        * **Format:** Markdown snippet or `project-task-manager` note.
 * **Success Criteria for Phase (Definition of Done for Phase):**
     * [X] Initial scope and value proposition are clearly documented.
     * [X] Initial feasibility (technical, resource) has been assessed.
