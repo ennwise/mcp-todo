@@ -3,7 +3,7 @@
 //! This module defines the `Quote` struct, which represents a quotation
 //! along with its author and optional source.
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 // WBS 2.4: Implement Quote Formatting Logic
 // For the MVP, the Quote struct is directly serialized for API responses.
@@ -70,7 +70,8 @@ mod tests {
 
     #[test]
     fn test_quote_deserialization() {
-        let json_data = r#"{"id":2,"quote":"Another test.","author":"Another Author","source":null}"#;
+        let json_data =
+            r#"{"id":2,"quote":"Another test.","author":"Another Author","source":null}"#;
         let deserialized: Quote = serde_json::from_str(json_data).unwrap();
         let expected_quote = Quote {
             id: 2,
@@ -83,7 +84,8 @@ mod tests {
 
     #[test]
     fn test_quote_deserialization_with_source() {
-        let json_data = r#"{"id":3,"quote":"With source.","author":"Source Author","source":"The Source"}"#;
+        let json_data =
+            r#"{"id":3,"quote":"With source.","author":"Source Author","source":"The Source"}"#;
         let deserialized: Quote = serde_json::from_str(json_data).unwrap();
         let expected_quote = Quote {
             id: 3,
@@ -96,7 +98,12 @@ mod tests {
 
     #[test]
     fn test_new_quote_constructor() {
-        let quote = Quote::new(4, "Constructed quote".to_string(), "Constructor".to_string(), Some("Source of Construction".to_string()));
+        let quote = Quote::new(
+            4,
+            "Constructed quote".to_string(),
+            "Constructor".to_string(),
+            Some("Source of Construction".to_string()),
+        );
         assert_eq!(quote.id, 4);
         assert_eq!(quote.text, "Constructed quote");
         assert_eq!(quote.author, "Constructor");

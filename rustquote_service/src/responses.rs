@@ -3,7 +3,7 @@
 //! This module defines the standard structures used for serializing API responses.
 //! These structs are used by the API handlers to provide consistent JSON outputs.
 
-use serde::{Serialize, Deserialize}; // Add Deserialize
+use serde::{Deserialize, Serialize}; // Add Deserialize
 
 /// Represents the health status of the service.
 ///

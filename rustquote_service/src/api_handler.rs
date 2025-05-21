@@ -3,13 +3,13 @@
 //! This module contains the Axum handlers for the API endpoints.
 //! It defines the logic for responding to HTTP requests for health checks and quote retrieval.
 
-use axum::{http::StatusCode, Json, extract::State}; // Added State
 use crate::services::quote_service;
-use crate::AppState; // Import AppState
-// Quote model is not directly used here anymore for response construction, but might be for logic
-// use crate::models::Quote;
-use crate::responses::{HealthStatus, QuoteResponse}; // ErrorResponse is now handled by AppError
-use crate::errors::AppError; // Import the custom error type
+use crate::AppState;
+use axum::{extract::State, http::StatusCode, Json}; // Added State // Import AppState
+                                                    // Quote model is not directly used here anymore for response construction, but might be for logic
+                                                    // use crate::models::Quote;
+use crate::errors::AppError;
+use crate::responses::{HealthStatus, QuoteResponse}; // ErrorResponse is now handled by AppError // Import the custom error type
 
 /// Handles requests to the `/api/health` endpoint.
 ///
@@ -36,10 +36,14 @@ pub async fn health_check_handler() -> (StatusCode, Json<HealthStatus>) {
 pub async fn get_quote_handler(
     State(app_state): State<AppState>, // Extract AppState
 ) -> Result<Json<QuoteResponse>, AppError> {
-    tracing::debug!("Received request for /api/v1/quote. Using quotes_file_path: {}", app_state.quotes_file_path.display());
+    tracing::debug!(
+        "Received request for /api/v1/quote. Using quotes_file_path: {}",
+        app_state.quotes_file_path.display()
+    );
     match quote_service::load_quotes_from_file(&app_state.quotes_file_path) {
         Ok(quotes) => {
-            if quotes.is_empty() { // Explicitly check for empty quotes vector
+            if quotes.is_empty() {
+                // Explicitly check for empty quotes vector
                 Err(AppError::NotFound(
                     "No quotes available in the data file.".to_string(),
                 ))
@@ -53,14 +57,18 @@ pub async fn get_quote_handler(
             } else {
                 // This branch should ideally not be hit if quotes.is_empty() is checked above
                 // but kept for safety, or if get_random_quote could fail for other reasons on non-empty.
-                Err(AppError::NotFound( // Should be unreachable if quotes.is_empty() is handled
+                Err(AppError::NotFound(
+                    // Should be unreachable if quotes.is_empty() is handled
                     "Could not select a random quote (unexpected).".to_string(),
                 ))
             }
         }
         Err(service_error) => {
             // Log the specific service_error for better diagnostics
-            tracing::error!("Quote service error during load_quotes_from_file: {:?}", service_error); // Changed to debug print
+            tracing::error!(
+                "Quote service error during load_quotes_from_file: {:?}",
+                service_error
+            ); // Changed to debug print
             tracing::error!("Failed to load quotes (display): {}", service_error);
             // Convert QuoteServiceError to AppError using the From trait
             Err(AppError::from(service_error))
@@ -89,7 +97,10 @@ pub async fn get_quote_by_id_handler(
     match quote_service::load_quotes_from_file(&app_state.quotes_file_path) {
         Ok(quotes) => {
             if quotes.is_empty() {
-                tracing::warn!("No quotes available in the data file when searching for ID: {}", id);
+                tracing::warn!(
+                    "No quotes available in the data file when searching for ID: {}",
+                    id
+                );
                 return Err(AppError::NotFound(format!(
                     "No quotes available in the data file. Cannot find quote with ID: {}.",
                     id

@@ -60,16 +60,8 @@ impl IntoResponse for AppError {
                 "INTERNAL_SERVER_ERROR".to_string(),
                 msg,
             ),
-            AppError::NotFound(msg) => (
-                StatusCode::NOT_FOUND,
-                "NOT_FOUND".to_string(),
-                msg,
-            ),
-            AppError::BadRequest(msg) => (
-                StatusCode::BAD_REQUEST,
-                "BAD_REQUEST".to_string(),
-                msg,
-            ),
+            AppError::NotFound(msg) => (StatusCode::NOT_FOUND, "NOT_FOUND".to_string(), msg),
+            AppError::BadRequest(msg) => (StatusCode::BAD_REQUEST, "BAD_REQUEST".to_string(), msg),
             AppError::QuoteSourcingError(msg) => (
                 // Could be 500 or a more specific client error depending on context
                 StatusCode::INTERNAL_SERVER_ERROR,
@@ -126,21 +118,26 @@ impl From<QuoteServiceError> for AppError {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::services::quote_service::QuoteServiceError;
     use axum::response::IntoResponse;
-    use serde_json::json;
-    use crate::services::quote_service::QuoteServiceError; // Ensure this is available
+    use serde_json::json; // Ensure this is available
 
     #[tokio::test]
     async fn test_app_error_internal_server_error_into_response() {
         let error = AppError::InternalServerError("Test internal error".to_string());
         let response = error.into_response();
         assert_eq!(response.status(), StatusCode::INTERNAL_SERVER_ERROR);
-        let body = axum::body::to_bytes(response.into_body(), 1024 * 1024).await.unwrap(); // Use axum::body::to_bytes with limit
+        let body = axum::body::to_bytes(response.into_body(), 1024 * 1024)
+            .await
+            .unwrap(); // Use axum::body::to_bytes with limit
         let expected_json = json!({
             "error_code": "INTERNAL_SERVER_ERROR",
             "message": "Test internal error"
         });
-        assert_eq!(serde_json::from_slice::<serde_json::Value>(&body).unwrap(), expected_json);
+        assert_eq!(
+            serde_json::from_slice::<serde_json::Value>(&body).unwrap(),
+            expected_json
+        );
     }
 
     #[tokio::test]
@@ -148,12 +145,17 @@ mod tests {
         let error = AppError::NotFound("Resource not here".to_string());
         let response = error.into_response();
         assert_eq!(response.status(), StatusCode::NOT_FOUND);
-        let body = axum::body::to_bytes(response.into_body(), 1024 * 1024).await.unwrap(); // Use axum::body::to_bytes with limit
+        let body = axum::body::to_bytes(response.into_body(), 1024 * 1024)
+            .await
+            .unwrap(); // Use axum::body::to_bytes with limit
         let expected_json = json!({
             "error_code": "NOT_FOUND",
             "message": "Resource not here"
         });
-        assert_eq!(serde_json::from_slice::<serde_json::Value>(&body).unwrap(), expected_json);
+        assert_eq!(
+            serde_json::from_slice::<serde_json::Value>(&body).unwrap(),
+            expected_json
+        );
     }
 
     #[tokio::test]
@@ -161,12 +163,17 @@ mod tests {
         let error = AppError::BadRequest("Bad input".to_string());
         let response = error.into_response();
         assert_eq!(response.status(), StatusCode::BAD_REQUEST);
-        let body = axum::body::to_bytes(response.into_body(), 1024 * 1024).await.unwrap(); // Use axum::body::to_bytes with limit
+        let body = axum::body::to_bytes(response.into_body(), 1024 * 1024)
+            .await
+            .unwrap(); // Use axum::body::to_bytes with limit
         let expected_json = json!({
             "error_code": "BAD_REQUEST",
             "message": "Bad input"
         });
-        assert_eq!(serde_json::from_slice::<serde_json::Value>(&body).unwrap(), expected_json);
+        assert_eq!(
+            serde_json::from_slice::<serde_json::Value>(&body).unwrap(),
+            expected_json
+        );
     }
 
     #[tokio::test]
@@ -174,12 +181,17 @@ mod tests {
         let error = AppError::QuoteSourcingError("Could not get quotes".to_string());
         let response = error.into_response();
         assert_eq!(response.status(), StatusCode::INTERNAL_SERVER_ERROR); // As per current impl
-        let body = axum::body::to_bytes(response.into_body(), 1024 * 1024).await.unwrap(); // Use axum::body::to_bytes with limit
+        let body = axum::body::to_bytes(response.into_body(), 1024 * 1024)
+            .await
+            .unwrap(); // Use axum::body::to_bytes with limit
         let expected_json = json!({
             "error_code": "QUOTE_SOURCING_ERROR",
             "message": "Could not get quotes"
         });
-        assert_eq!(serde_json::from_slice::<serde_json::Value>(&body).unwrap(), expected_json);
+        assert_eq!(
+            serde_json::from_slice::<serde_json::Value>(&body).unwrap(),
+            expected_json
+        );
     }
 
     #[test]

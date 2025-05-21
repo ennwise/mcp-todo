@@ -39,8 +39,8 @@ pub fn load_config() -> Result<AppConfig, ConfigError> {
     // Attempt to load .env file. It's okay if it's not found (e.g., in production).
     dotenvy::dotenv().ok();
 
-    let server_address_str = env::var("RUSTQUOTE_SERVER_ADDRESS")
-        .unwrap_or_else(|_| DEFAULT_SERVER_ADDRESS.to_string());
+    let server_address_str =
+        env::var("RUSTQUOTE_SERVER_ADDRESS").unwrap_or_else(|_| DEFAULT_SERVER_ADDRESS.to_string());
 
     let server_address = server_address_str.parse::<SocketAddr>().map_err(|e| {
         ConfigError::InvalidServerAddress(format!(
@@ -51,7 +51,7 @@ pub fn load_config() -> Result<AppConfig, ConfigError> {
 
     let quotes_file_path_str = env::var("RUSTQUOTE_QUOTES_FILE_PATH")
         .unwrap_or_else(|_| DEFAULT_QUOTES_FILE_PATH.to_string());
-    
+
     let quotes_file_path = PathBuf::from(quotes_file_path_str);
 
     Ok(AppConfig {
@@ -63,8 +63,8 @@ pub fn load_config() -> Result<AppConfig, ConfigError> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::env;
-    use serial_test::serial; // Added for serial tests
+    use serial_test::serial;
+    use std::env; // Added for serial tests
 
     // Helper to set env var for a test and ensure it's cleaned up
     struct EnvVarGuard {
@@ -92,20 +92,23 @@ mod tests {
             }
         }
     }
-    
+
     #[test]
     #[serial]
     fn test_load_config_defaults() {
         // Ensure no relevant env vars are set that might interfere
         env::remove_var("RUSTQUOTE_SERVER_ADDRESS");
         env::remove_var("RUSTQUOTE_QUOTES_FILE_PATH");
-        
+
         let config = load_config().expect("Failed to load default config");
         assert_eq!(
             config.server_address,
             DEFAULT_SERVER_ADDRESS.parse::<SocketAddr>().unwrap()
         );
-        assert_eq!(config.quotes_file_path, PathBuf::from(DEFAULT_QUOTES_FILE_PATH));
+        assert_eq!(
+            config.quotes_file_path,
+            PathBuf::from(DEFAULT_QUOTES_FILE_PATH)
+        );
     }
 
     #[test]
@@ -131,7 +134,7 @@ mod tests {
         let result = load_config();
         assert!(matches!(result, Err(ConfigError::InvalidServerAddress(_))));
     }
-    
+
     #[test]
     #[serial]
     fn test_load_config_partial_env_var_address_set() {
@@ -143,20 +146,27 @@ mod tests {
             config.server_address,
             "127.0.0.1:7070".parse::<SocketAddr>().unwrap()
         );
-        assert_eq!(config.quotes_file_path, PathBuf::from(DEFAULT_QUOTES_FILE_PATH));
+        assert_eq!(
+            config.quotes_file_path,
+            PathBuf::from(DEFAULT_QUOTES_FILE_PATH)
+        );
     }
 
     #[test]
     #[serial]
     fn test_load_config_partial_env_var_path_set() {
         env::remove_var("RUSTQUOTE_SERVER_ADDRESS"); // Use default for address
-        let _guard_path = EnvVarGuard::new("RUSTQUOTE_QUOTES_FILE_PATH", "specific/quotes_test.json");
-        
+        let _guard_path =
+            EnvVarGuard::new("RUSTQUOTE_QUOTES_FILE_PATH", "specific/quotes_test.json");
+
         let config = load_config().expect("Failed to load config with partial env vars");
         assert_eq!(
             config.server_address,
             DEFAULT_SERVER_ADDRESS.parse::<SocketAddr>().unwrap()
         );
-        assert_eq!(config.quotes_file_path, PathBuf::from("specific/quotes_test.json"));
+        assert_eq!(
+            config.quotes_file_path,
+            PathBuf::from("specific/quotes_test.json")
+        );
     }
 }

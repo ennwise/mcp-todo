@@ -7,16 +7,16 @@
 pub mod api_handler;
 pub mod responses;
 // pub mod config_manager; // This is now a top-level crate module, not part of rustquote_service library
-pub mod models;
-pub mod services;
-pub mod quote_generator;
-pub mod utils;
 pub mod errors;
+pub mod models;
+pub mod quote_generator;
+pub mod services;
+pub mod utils;
 
 use axum::{routing::get, Router}; // Removed unused State import here, it's used in api_handler
 use std::net::SocketAddr;
-use std::sync::Arc; // For AppState
 use std::path::PathBuf; // Added for quotes_file_path type
+use std::sync::Arc; // For AppState
 use tokio::net::TcpListener;
 
 /// Application state shared across handlers.
@@ -55,6 +55,9 @@ pub fn app(app_state: AppState) -> Router {
     Router::new()
         .route("/api/health", get(api_handler::health_check_handler))
         .route("/api/v1/quote", get(api_handler::get_quote_handler))
-        .route("/api/v1/quote/:id", get(api_handler::get_quote_by_id_handler))
+        .route(
+            "/api/v1/quote/:id",
+            get(api_handler::get_quote_by_id_handler),
+        )
         .with_state(app_state) // Share AppState with handlers
 }

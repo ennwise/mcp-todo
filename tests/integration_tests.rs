@@ -2,14 +2,14 @@ use axum::{
     body::{self, Body}, // Import axum::body directly
     http::{Request, StatusCode},
 };
+use rustquote_service::app; // Use the app router from the library
 use rustquote_service::models::Quote;
 use rustquote_service::responses::QuoteResponse;
-use rustquote_service::app; // Use the app router from the library
 use rustquote_service::AppState; // Import AppState
-use std::sync::Arc; // For AppState
-use std::path::PathBuf;
 use serde_json;
-// std::fs::File and std::io::Write are not directly needed in tests anymore if create_temp_quotes_file handles it
+use std::path::PathBuf;
+use std::sync::Arc; // For AppState
+                    // std::fs::File and std::io::Write are not directly needed in tests anymore if create_temp_quotes_file handles it
 use tempfile::NamedTempFile;
 // std::path::{Path, PathBuf} are not directly needed if NamedTempFile handles paths
 use tower::util::ServiceExt; // Corrected import for ServiceExt
@@ -46,12 +46,20 @@ async fn test_get_quote_handler_success() {
 
     assert_eq!(response.status(), StatusCode::OK);
 
-    let body = body::to_bytes(response.into_body(), 1024 * 1024).await.unwrap();
-    let quote_response: QuoteResponse = serde_json::from_slice(&body).expect("Failed to deserialize quote response");
+    let body = body::to_bytes(response.into_body(), 1024 * 1024)
+        .await
+        .unwrap();
+    let quote_response: QuoteResponse =
+        serde_json::from_slice(&body).expect("Failed to deserialize quote response");
 
     let original_quotes: Vec<Quote> = serde_json::from_str(quotes_content).unwrap();
-    let is_valid_quote = original_quotes.iter().any(|q| q.text == quote_response.quote && q.author == quote_response.author);
-    assert!(is_valid_quote, "Returned quote was not one of the test quotes.");
+    let is_valid_quote = original_quotes
+        .iter()
+        .any(|q| q.text == quote_response.quote && q.author == quote_response.author);
+    assert!(
+        is_valid_quote,
+        "Returned quote was not one of the test quotes."
+    );
     // temp_file is automatically cleaned up
 }
 
@@ -74,12 +82,20 @@ async fn test_get_quote_handler_empty_file() {
         .unwrap();
 
     assert_eq!(response.status(), StatusCode::NOT_FOUND); // Expect 404 if no quotes
-    let body = body::to_bytes(response.into_body(), 1024 * 1024).await.unwrap();
+    let body = body::to_bytes(response.into_body(), 1024 * 1024)
+        .await
+        .unwrap();
     let body_str = String::from_utf8_lossy(&body);
-    println!("[test_get_quote_handler_empty_file] Response body: {}", body_str);
+    println!(
+        "[test_get_quote_handler_empty_file] Response body: {}",
+        body_str
+    );
     let error_response: serde_json::Value = serde_json::from_slice(&body)
         .expect("[test_get_quote_handler_empty_file] Failed to deserialize error response");
-    assert_eq!(error_response["message"], "No quotes available in the data file.");
+    assert_eq!(
+        error_response["message"],
+        "No quotes available in the data file."
+    );
     assert_eq!(error_response["error_code"], "NOT_FOUND");
     // temp_file is automatically cleaned up
 }
@@ -107,12 +123,19 @@ async fn test_get_quote_handler_file_not_found() {
         .unwrap();
 
     assert_eq!(response.status(), StatusCode::INTERNAL_SERVER_ERROR);
-    let body = body::to_bytes(response.into_body(), 1024 * 1024).await.unwrap();
+    let body = body::to_bytes(response.into_body(), 1024 * 1024)
+        .await
+        .unwrap();
     let body_str = String::from_utf8_lossy(&body);
-    println!("[test_get_quote_handler_file_not_found] Response body: {}", body_str);
+    println!(
+        "[test_get_quote_handler_file_not_found] Response body: {}",
+        body_str
+    );
     let error_response: serde_json::Value = serde_json::from_slice(&body)
         .expect("[test_get_quote_handler_file_not_found] Failed to deserialize error response");
-    let err_msg = error_response["message"].as_str().expect("Error message should be a string");
+    let err_msg = error_response["message"]
+        .as_str()
+        .expect("Error message should be a string");
     // Message comes from AppError::from(QuoteServiceError::FileNotFound)
     assert!(err_msg.starts_with("Quote data file not found:"));
     assert_eq!(error_response["error_code"], "QUOTE_SOURCING_ERROR");
@@ -137,10 +160,17 @@ async fn test_get_quote_handler_invalid_json() {
         .unwrap();
 
     assert_eq!(response.status(), StatusCode::INTERNAL_SERVER_ERROR);
-    let body = body::to_bytes(response.into_body(), 1024 * 1024).await.unwrap();
+    let body = body::to_bytes(response.into_body(), 1024 * 1024)
+        .await
+        .unwrap();
     let error_response: serde_json::Value = serde_json::from_slice(&body).unwrap();
-    let err_msg = error_response["message"].as_str().expect("Error message should be a string");
-    println!("[test_get_quote_handler_invalid_json] Actual error message: {}", err_msg);
+    let err_msg = error_response["message"]
+        .as_str()
+        .expect("Error message should be a string");
+    println!(
+        "[test_get_quote_handler_invalid_json] Actual error message: {}",
+        err_msg
+    );
     assert!(err_msg.starts_with("Error parsing quote data:"));
     assert_eq!(error_response["error_code"], "QUOTE_SOURCING_ERROR");
     // temp_file is automatically cleaned up
@@ -169,10 +199,17 @@ async fn test_get_quote_handler_malformed_quote_data() {
         .unwrap();
 
     assert_eq!(response.status(), StatusCode::INTERNAL_SERVER_ERROR);
-    let body = body::to_bytes(response.into_body(), 1024 * 1024).await.unwrap();
+    let body = body::to_bytes(response.into_body(), 1024 * 1024)
+        .await
+        .unwrap();
     let error_response: serde_json::Value = serde_json::from_slice(&body).unwrap();
-    let err_msg = error_response["message"].as_str().expect("Error message should be a string");
-    println!("[test_get_quote_handler_malformed_quote_data] Actual error message: {}", err_msg);
+    let err_msg = error_response["message"]
+        .as_str()
+        .expect("Error message should be a string");
+    println!(
+        "[test_get_quote_handler_malformed_quote_data] Actual error message: {}",
+        err_msg
+    );
     assert!(err_msg.starts_with("Error parsing quote data:"));
     assert!(err_msg.contains("missing field `quote`"));
     assert_eq!(error_response["error_code"], "QUOTE_SOURCING_ERROR");
@@ -190,12 +227,19 @@ async fn test_health_check_handler() {
     let router = app(dummy_app_state);
 
     let response = router
-        .oneshot(Request::builder().uri("/api/health").body(Body::empty()).unwrap())
+        .oneshot(
+            Request::builder()
+                .uri("/api/health")
+                .body(Body::empty())
+                .unwrap(),
+        )
         .await
         .unwrap();
 
     assert_eq!(response.status(), StatusCode::OK);
-    let body = body::to_bytes(response.into_body(), 1024 * 1024).await.unwrap();
+    let body = body::to_bytes(response.into_body(), 1024 * 1024)
+        .await
+        .unwrap();
     let health_status: serde_json::Value = serde_json::from_slice(&body).unwrap();
     assert_eq!(health_status["status"], "healthy");
 }
@@ -225,7 +269,9 @@ async fn test_get_quote_by_id_handler_success() {
 
     assert_eq!(response.status(), StatusCode::OK);
 
-    let body = body::to_bytes(response.into_body(), 1024 * 1024).await.unwrap();
+    let body = body::to_bytes(response.into_body(), 1024 * 1024)
+        .await
+        .unwrap();
     let quote_response: QuoteResponse = serde_json::from_slice(&body)
         .expect("Failed to deserialize quote response for get_quote_by_id_handler_success");
 
@@ -256,11 +302,16 @@ async fn test_get_quote_by_id_handler_not_found() {
         .unwrap();
 
     assert_eq!(response.status(), StatusCode::NOT_FOUND);
-    let body = body::to_bytes(response.into_body(), 1024 * 1024).await.unwrap();
+    let body = body::to_bytes(response.into_body(), 1024 * 1024)
+        .await
+        .unwrap();
     let error_response: serde_json::Value = serde_json::from_slice(&body)
         .expect("Failed to deserialize error response for get_quote_by_id_handler_not_found");
-    
-    assert_eq!(error_response["message"], format!("Quote with ID: {} not found.", non_existent_id));
+
+    assert_eq!(
+        error_response["message"],
+        format!("Quote with ID: {} not found.", non_existent_id)
+    );
     assert_eq!(error_response["error_code"], "NOT_FOUND");
 }
 
@@ -284,11 +335,19 @@ async fn test_get_quote_by_id_handler_empty_file_for_id_request() {
         .unwrap();
 
     assert_eq!(response.status(), StatusCode::NOT_FOUND);
-    let body = body::to_bytes(response.into_body(), 1024 * 1024).await.unwrap();
+    let body = body::to_bytes(response.into_body(), 1024 * 1024)
+        .await
+        .unwrap();
     let error_response: serde_json::Value = serde_json::from_slice(&body)
         .expect("Failed to deserialize error response for get_quote_by_id_handler_empty_file_for_id_request");
 
-    assert_eq!(error_response["message"], format!("No quotes available in the data file. Cannot find quote with ID: {}.", target_id));
+    assert_eq!(
+        error_response["message"],
+        format!(
+            "No quotes available in the data file. Cannot find quote with ID: {}.",
+            target_id
+        )
+    );
     assert_eq!(error_response["error_code"], "NOT_FOUND");
 }
 
@@ -302,7 +361,7 @@ async fn test_get_quote_by_id_handler_file_not_found_for_id_request() {
         quotes_file_path: Arc::new(PathBuf::from(non_existent_path.clone())), // Clone for use in assert message
     };
     let router = app(app_state);
-    
+
     let target_id = 1;
     let response = router
         .oneshot(
@@ -315,10 +374,15 @@ async fn test_get_quote_by_id_handler_file_not_found_for_id_request() {
         .unwrap();
 
     assert_eq!(response.status(), StatusCode::INTERNAL_SERVER_ERROR);
-    let body = body::to_bytes(response.into_body(), 1024 * 1024).await.unwrap();
+    let body = body::to_bytes(response.into_body(), 1024 * 1024)
+        .await
+        .unwrap();
     let error_response: serde_json::Value = serde_json::from_slice(&body)
         .expect("Failed to deserialize error response for get_quote_by_id_handler_file_not_found_for_id_request");
 
-    assert!(error_response["message"].as_str().unwrap().contains(&format!("Quote data file not found: {}", non_existent_path)));
+    assert!(error_response["message"]
+        .as_str()
+        .unwrap()
+        .contains(&format!("Quote data file not found: {}", non_existent_path)));
     assert_eq!(error_response["error_code"], "QUOTE_SOURCING_ERROR");
 }

@@ -21,8 +21,12 @@ pub enum QuoteServiceError {
 impl std::fmt::Display for QuoteServiceError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            QuoteServiceError::FileNotFound(path) => write!(f, "Quote data file not found at path: {}", path),
-            QuoteServiceError::FileReadError(err) => write!(f, "Error reading quote data file: {}", err),
+            QuoteServiceError::FileNotFound(path) => {
+                write!(f, "Quote data file not found at path: {}", path)
+            }
+            QuoteServiceError::FileReadError(err) => {
+                write!(f, "Error reading quote data file: {}", err)
+            }
             QuoteServiceError::ParseError(err) => write!(f, "Error parsing quote data: {}", err),
         }
     }
@@ -63,11 +67,10 @@ pub fn load_quotes_from_file(file_path: &PathBuf) -> Result<Vec<Quote>, QuoteSer
         ));
     }
 
-    let file_content = fs::read_to_string(file_path)
-        .map_err(QuoteServiceError::FileReadError)?;
+    let file_content = fs::read_to_string(file_path).map_err(QuoteServiceError::FileReadError)?;
 
-    let quotes: Vec<Quote> = serde_json::from_str(&file_content)
-        .map_err(QuoteServiceError::ParseError)?;
+    let quotes: Vec<Quote> =
+        serde_json::from_str(&file_content).map_err(QuoteServiceError::ParseError)?;
 
     Ok(quotes)
 }
@@ -174,9 +177,12 @@ mod tests {
 
     #[test]
     fn test_get_random_quote_single_item() {
-        let quotes = vec![
-            Quote { id: 1, text: "Only quote".to_string(), author: "Author".to_string(), source: None },
-        ];
+        let quotes = vec![Quote {
+            id: 1,
+            text: "Only quote".to_string(),
+            author: "Author".to_string(),
+            source: None,
+        }];
         let random_quote = get_random_quote(&quotes);
         assert!(random_quote.is_some());
         assert_eq!(random_quote.unwrap().id, 1);
@@ -185,9 +191,24 @@ mod tests {
     #[test]
     fn test_get_random_quote_multiple_items() {
         let quotes = vec![
-            Quote { id: 1, text: "Quote 1".to_string(), author: "Author 1".to_string(), source: None },
-            Quote { id: 2, text: "Quote 2".to_string(), author: "Author 2".to_string(), source: None },
-            Quote { id: 3, text: "Quote 3".to_string(), author: "Author 3".to_string(), source: None },
+            Quote {
+                id: 1,
+                text: "Quote 1".to_string(),
+                author: "Author 1".to_string(),
+                source: None,
+            },
+            Quote {
+                id: 2,
+                text: "Quote 2".to_string(),
+                author: "Author 2".to_string(),
+                source: None,
+            },
+            Quote {
+                id: 3,
+                text: "Quote 3".to_string(),
+                author: "Author 3".to_string(),
+                source: None,
+            },
         ];
         // Run multiple times to increase chance of catching non-random behavior (though not a perfect test for randomness)
         let mut found_ids = std::collections::HashSet::new();
@@ -205,8 +226,18 @@ mod tests {
     #[test]
     fn test_get_quote_by_id_found() {
         let quotes = vec![
-            Quote { id: 1, text: "Quote 1".to_string(), author: "Author 1".to_string(), source: None },
-            Quote { id: 2, text: "Quote 2".to_string(), author: "Author 2".to_string(), source: Some("Source 2".to_string()) },
+            Quote {
+                id: 1,
+                text: "Quote 1".to_string(),
+                author: "Author 1".to_string(),
+                source: None,
+            },
+            Quote {
+                id: 2,
+                text: "Quote 2".to_string(),
+                author: "Author 2".to_string(),
+                source: Some("Source 2".to_string()),
+            },
         ];
         let quote = get_quote_by_id(&quotes, 2);
         assert!(quote.is_some());
@@ -216,9 +247,12 @@ mod tests {
 
     #[test]
     fn test_get_quote_by_id_not_found() {
-        let quotes = vec![
-            Quote { id: 1, text: "Quote 1".to_string(), author: "Author 1".to_string(), source: None },
-        ];
+        let quotes = vec![Quote {
+            id: 1,
+            text: "Quote 1".to_string(),
+            author: "Author 1".to_string(),
+            source: None,
+        }];
         let quote = get_quote_by_id(&quotes, 99);
         assert!(quote.is_none());
     }
