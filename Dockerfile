@@ -4,13 +4,16 @@ FROM rust:1.87-bullseye AS builder
 # Create a new empty shell project
 WORKDIR /usr/src/app
 COPY Cargo.toml Cargo.lock ./
-RUN mkdir src && echo "fn main() {}" > src/main.rs
+RUN mkdir -p src rustquote_service/src && \
+    echo "fn main() {println!(\"dummy main for dep caching\");}" > src/main.rs && \
+    echo "pub fn placeholder_lib_function() {println!(\"dummy lib for dep caching\");}" > rustquote_service/src/lib.rs
 # Build a dummy project to cache dependencies
 RUN cargo build --release --locked
-RUN rm -rf src target
+RUN rm -rf src target rustquote_service
 
 # Copy the actual source code
 COPY src ./src
+COPY rustquote_service ./rustquote_service
 
 # Build the application
 RUN cargo build --release --locked --target-dir /usr/src/app/target --bin rustquote_service
