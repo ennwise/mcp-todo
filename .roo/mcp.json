@@ -21,6 +21,14 @@
         "linkTask",
         "addTodo"
       ]
+    },
+    "gitmcp": {
+      "type": "sse",
+      "url": "https://gitmcp.io/ennwise/mcp-todo",
+      "alwaysAllow": [
+        "search_mcp_todo_code",
+        "fetch_mcp_todo_documentation"
+      ]
     }
   }
 }

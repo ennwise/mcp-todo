@@ -1,0 +1,2 @@
+"This is a custom quote."
+"Another custom quote."
