@@ -26,7 +26,7 @@ COPY --from=builder /usr/src/app/target/release/rustquote_service /usr/local/bin
 COPY data ./data
 
 # Expose the application port (assuming 3000 for now)
-EXPOSE 3000
+EXPOSE 8080
 
 # Define the command to run the application
 CMD ["/usr/local/bin/rustquote_service"]
