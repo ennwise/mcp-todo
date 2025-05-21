@@ -1271,7 +1271,7 @@
                 "10": {
                     "id": "10",
                     "text": "Commit and push all changes.",
-                    "done": false,
+                    "done": true,
                     "created_at": "2025-05-21T21:40:18.422Z"
                 },
                 "11": {
@@ -1293,11 +1293,23 @@
                     "text": "Manual testing (Todo #9): \n- Test Case 1 (with .env providing RUSTQUOTE_SERVER_ADDRESS=127.0.0.1:9090 and RUSTQUOTE_QUOTES_FILE_PATH=data/alt_quotes.json) was successful. Server started on custom port and loaded custom config values as per logs.\n- Test Case 2 (default config) confirmed that default values (0.0.0.0:8080, data/quotes.json) are loaded as per logs. However, server startup failed due to 'Address already in use (os error 98)' for port 8080. This blocks full verification of serving a default quote. \nMarking Todo #9 as blocked until port issue can be resolved by lead-developer-mode or environment.",
                     "type": "general",
                     "created_at": "2025-05-21T21:52:59.543Z"
+                },
+                "3": {
+                    "id": "3",
+                    "text": "Todo #11 (Verify CI pipeline): Please check the GitHub Actions CI pipeline for commit 10e304b on the main branch. This todo will be marked complete once CI success is confirmed by lead-developer-mode.",
+                    "type": "general",
+                    "created_at": "2025-05-21T21:53:29.150Z"
+                },
+                "4": {
+                    "id": "4",
+                    "text": "Task 57 (Implement config_manager.rs) is now 'blocked'.\nCompleted work (commit 10e304b on main):\n- Todos 1-8 & 10 are complete: Config loading from .env/env vars implemented, `dotenvy` added, `config_manager.rs` created with `AppConfig` and `load_config()`, `main.rs` and `lib.rs` updated, unit tests for config loading pass, README updated, changes committed and pushed.\n\nBlocked/Pending Items:\n- Todo #9 (Manual Testing - Default Config): Loading of default config values (0.0.0.0:8080, data/quotes.json) is confirmed by logs. However, server startup for this test case fails due to 'Address already in use (os error 98)' for port 8080. Test with `.env` (custom port 127.0.0.1:9090) was successful. This todo is blocked until the port conflict is resolved.\n- Todo #11 (Verify CI Pipeline): Requires `lead-developer-mode` to check GitHub Actions for commit 10e304b on main.\n\nRequesting `lead-developer-mode` to:\n1. Advise on resolving the port conflict for manual testing of default config (Todo #9).\n2. Verify CI pipeline (Todo #11) and mark it complete if successful.\nOnce these are addressed, the task can be moved to 'finished'.",
+                    "type": "general",
+                    "created_at": "2025-05-21T21:53:56.923Z"
                 }
             },
-            "status": "in progress",
+            "status": "blocked",
             "created_at": "2025-05-21T19:24:23.198Z",
-            "updated_at": "2025-05-21T21:52:59.543Z"
+            "updated_at": "2025-05-21T21:54:23.912Z"
         },
         "58": {
             "id": "58",
@@ -1956,7 +1968,7 @@
             "notes": {},
             "status": "new",
             "created_at": "2025-05-21T20:24:52.382Z",
-            "updated_at": "2025-05-21T21:40:23.597Z"
+            "updated_at": "2025-05-21T21:55:12.597Z"
         },
         "72": {
             "id": "72",
@@ -2275,6 +2287,270 @@
             "status": "in progress",
             "created_at": "2025-05-21T21:23:46.582Z",
             "updated_at": "2025-05-21T21:31:13.947Z"
+        },
+        "75": {
+            "id": "75",
+            "name": "Investigate and Resolve Port 8080 'Address already in use' Error",
+            "parent_id": "71",
+            "todos": {
+                "1": {
+                    "id": "1",
+                    "text": "Review Task 57 notes regarding the 'Address already in use' error for port 8080 during manual testing with default configuration.",
+                    "done": true,
+                    "created_at": "2025-05-21T21:54:45.307Z"
+                },
+                "2": {
+                    "id": "2",
+                    "text": "Attempt to identify the process currently using port 8080. Use system utilities like `ss -tulnp | grep ':8080'` or `netstat -tulnp | grep ':8080'` (Linux), or `Get-NetTCPConnection -LocalPort 8080` (Windows PowerShell).",
+                    "done": true,
+                    "created_at": "2025-05-21T21:54:45.307Z"
+                },
+                "3": {
+                    "id": "3",
+                    "text": "If a lingering RustQuote service process is found, terminate it.",
+                    "done": true,
+                    "created_at": "2025-05-21T21:54:45.307Z"
+                },
+                "4": {
+                    "id": "4",
+                    "text": "If another unrelated process is using port 8080, document this. Consider if the default port for RustQuote service should be changed in `.env.example` and default config logic (e.g., to 8081) to avoid common conflicts, or if the user/environment should manage this conflict.",
+                    "done": true,
+                    "created_at": "2025-05-21T21:54:45.307Z"
+                },
+                "5": {
+                    "id": "5",
+                    "text": "After attempting to free up port 8080 (or deciding on a port change), retry running the RustQuote service with default configuration: `cargo run` (without a `.env` file present or with `RUSTQUOTE_SERVER_ADDRESS` commented out/set to default in `.env`).",
+                    "done": false,
+                    "created_at": "2025-05-21T21:54:45.307Z"
+                },
+                "6": {
+                    "id": "6",
+                    "text": "Verify if the application now starts successfully on port 8080 (or the new default port if changed).",
+                    "done": false,
+                    "created_at": "2025-05-21T21:54:45.307Z"
+                },
+                "7": {
+                    "id": "7",
+                    "text": "If a port change was implemented, update `.env.example` and the default value in `config_manager.rs` (or equivalent config loading logic). Also, update `README.md` if necessary.",
+                    "done": true,
+                    "created_at": "2025-05-21T21:54:45.307Z"
+                },
+                "8": {
+                    "id": "8",
+                    "text": "Commit and push any necessary code changes (e.g., to default port in config or `.env.example`).",
+                    "done": false,
+                    "created_at": "2025-05-21T21:54:45.307Z"
+                }
+            },
+            "notes": {
+                "1": {
+                    "id": "1",
+                    "text": "Attempted to identify the process using port 8080 with `ss -tulnp | grep ':8080'`, `netstat -tulnp | grep ':8080'`, and `sudo netstat -tulnp | grep ':8080'`. The port is confirmed to be in use, but the specific process PID or name could not be identified. Proceeding with changing the default port for RustQuote service from 8080 to 8081 to resolve the conflict.",
+                    "type": "general",
+                    "created_at": "2025-05-21T21:56:50.743Z"
+                },
+                "2": {
+                    "id": "2",
+                    "text": "Attempted to run `cargo run` after changing default port to 8081. The application still failed with 'Address already in use (os error 98)' for port 8081. Investigating port 8081 usage.",
+                    "type": "general",
+                    "created_at": "2025-05-21T21:58:29.255Z"
+                },
+                "3": {
+                    "id": "3",
+                    "text": "Executed `sudo netstat -tulnp | grep ':8081'`. Port 8081 is also in use by an unidentified process. This suggests a broader issue with port availability or process identification in this environment.",
+                    "type": "general",
+                    "created_at": "2025-05-21T21:58:41.804Z"
+                },
+                "4": {
+                    "id": "4",
+                    "text": "Investigation complete. Port 8080 (default) and attempted alternative 8081 are both in use by unidentified processes. Standard system utilities (`ss`, `netstat`, `sudo netstat`) did not reveal PID/name. Reverted code changes that attempted to switch default port to 8081. The port conflict cannot be resolved by modifying application code alone; it appears to be an environment-level issue requiring external intervention to free up port 8080. Task cannot be completed to 'finished' status as the service cannot start on its default port.",
+                    "type": "general",
+                    "created_at": "2025-05-21T21:59:36.283Z"
+                }
+            },
+            "status": "blocked",
+            "created_at": "2025-05-21T21:54:36.319Z",
+            "updated_at": "2025-05-21T21:59:42.555Z"
+        },
+        "76": {
+            "id": "76",
+            "name": "Verify CI Pipeline Status for Commit 10e304b (Task 57)",
+            "parent_id": "71",
+            "todos": {
+                "1": {
+                    "id": "1",
+                    "text": "Access the GitHub repository for the RustQuote Service project.",
+                    "done": false,
+                    "created_at": "2025-05-21T21:55:07.221Z"
+                },
+                "2": {
+                    "id": "2",
+                    "text": "Navigate to the 'Actions' tab or the specific CI/CD pipeline runs.",
+                    "done": false,
+                    "created_at": "2025-05-21T21:55:07.221Z"
+                },
+                "3": {
+                    "id": "3",
+                    "text": "Locate the CI run corresponding to commit `10e304b` (related to Task 57 - config manager implementation).",
+                    "done": false,
+                    "created_at": "2025-05-21T21:55:07.221Z"
+                },
+                "4": {
+                    "id": "4",
+                    "text": "Review the status of all jobs in the CI run (build, test, lint, format, coverage).",
+                    "done": false,
+                    "created_at": "2025-05-21T21:55:07.221Z"
+                },
+                "5": {
+                    "id": "5",
+                    "text": "Document the outcome (success or failure, and reasons for failure if any) as a note in this task (76).",
+                    "done": false,
+                    "created_at": "2025-05-21T21:55:07.221Z"
+                },
+                "6": {
+                    "id": "6",
+                    "text": "If CI failed, add a note to Task 57 detailing the failure and suggesting it needs to be addressed before Task 57 can be unblocked.",
+                    "done": false,
+                    "created_at": "2025-05-21T21:55:07.221Z"
+                }
+            },
+            "notes": {
+                "1": {
+                    "id": "1",
+                    "text": "Starting investigation of CI pipeline status for commit 10e304b.",
+                    "type": "general",
+                    "created_at": "2025-05-21T22:01:13.064Z"
+                },
+                "2": {
+                    "id": "2",
+                    "text": "CI pipeline for commit 10e304b has failed due to a linting error. Error: 'redundant import: use tracing;' in rustquote_service/src/lib.rs at line 21. This needs to be fixed before CI can pass.",
+                    "type": "general",
+                    "created_at": "2025-05-21T22:02:57.545Z"
+                },
+                "3": {
+                    "id": "3",
+                    "text": "Task 76 (Verify CI Pipeline Status for Commit 10e304b) is BLOCKED. The CI pipeline failed due to a linting error: 'redundant import: use tracing;' in rustquote_service/src/lib.rs at line 21. This linting issue must be resolved before the CI status can be successfully verified.",
+                    "type": "general",
+                    "created_at": "2025-05-21T22:03:07.086Z"
+                }
+            },
+            "status": "blocked",
+            "created_at": "2025-05-21T21:55:00.651Z",
+            "updated_at": "2025-05-21T22:03:07.086Z"
+        },
+        "77": {
+            "id": "77",
+            "name": "Management - Continue RustQuote Service Phase 2 Completion",
+            "parent_id": "71",
+            "todos": {
+                "1": {
+                    "id": "1",
+                    "text": "Delegate Task 76 (Verify CI Pipeline Status for Commit 10e304b) to lead-developer-mode.",
+                    "done": true,
+                    "created_at": "2025-05-21T22:00:48.990Z"
+                },
+                "2": {
+                    "id": "2",
+                    "text": "Monitor Task 74 (Docker build fix - 'data' dir) with lead-developer-mode for completion.",
+                    "done": false,
+                    "created_at": "2025-05-21T22:00:48.990Z"
+                },
+                "3": {
+                    "id": "3",
+                    "text": "Monitor Task 75 (Port 8080 Conflict) for user resolution/guidance.",
+                    "done": false,
+                    "created_at": "2025-05-21T22:00:48.990Z"
+                },
+                "4": {
+                    "id": "4",
+                    "text": "Once Task 74 is complete, unblock Task 63 (Deployment Script Fix) and re-delegate its remaining work to coder-mode.",
+                    "done": false,
+                    "created_at": "2025-05-21T22:00:48.990Z"
+                },
+                "5": {
+                    "id": "5",
+                    "text": "Once Task 75 and Task 76 are complete, unblock Task 57 (Config Management) and re-delegate its remaining work to coder-mode.",
+                    "done": false,
+                    "created_at": "2025-05-21T22:00:48.990Z"
+                },
+                "6": {
+                    "id": "6",
+                    "text": "Plan, prioritize, and delegate outstanding tasks (50, 55, 60, 64, 65, 66, 67) as prerequisites are met.",
+                    "done": false,
+                    "created_at": "2025-05-21T22:00:48.990Z"
+                },
+                "7": {
+                    "id": "7",
+                    "text": "Document all orchestration decisions and progress in Task 77 notes.",
+                    "done": false,
+                    "created_at": "2025-05-21T22:00:48.990Z"
+                }
+            },
+            "notes": {
+                "1": {
+                    "id": "1",
+                    "text": "Task 76 (Verify CI for commit 10e304b) reported by lead-developer-mode as BLOCKED. CI pipeline failed due to a linting error: 'redundant import: use tracing;' in `rustquote_service/src/lib.rs` at line 21. This blocks Task 57 (Config Management). A new task will be created to address the linting error.",
+                    "type": "general",
+                    "created_at": "2025-05-21T22:03:33.656Z"
+                }
+            },
+            "status": "in progress",
+            "created_at": "2025-05-21T22:00:22.402Z",
+            "updated_at": "2025-05-21T22:03:33.656Z"
+        },
+        "78": {
+            "id": "78",
+            "name": "Fix Linting Error in `rustquote_service/src/lib.rs` (Commit 10e304b)",
+            "parent_id": "57",
+            "todos": {
+                "1": {
+                    "id": "1",
+                    "text": "Identify and remove the redundant import 'use tracing;' at line 21 in `rustquote_service/src/lib.rs`.",
+                    "done": true,
+                    "created_at": "2025-05-21T22:03:44.623Z"
+                },
+                "2": {
+                    "id": "2",
+                    "text": "Verify the fix locally by running the linter (e.g., `cargo clippy`).",
+                    "done": true,
+                    "created_at": "2025-05-21T22:03:44.623Z"
+                },
+                "3": {
+                    "id": "3",
+                    "text": "Commit the change with an appropriate message (e.g., 'Fix: Remove redundant import in lib.rs').",
+                    "done": false,
+                    "created_at": "2025-05-21T22:03:44.623Z"
+                },
+                "4": {
+                    "id": "4",
+                    "text": "Push the commit to the remote repository.",
+                    "done": false,
+                    "created_at": "2025-05-21T22:03:44.623Z"
+                },
+                "5": {
+                    "id": "5",
+                    "text": "Report the new commit hash in a note on this task.",
+                    "done": false,
+                    "created_at": "2025-05-21T22:03:44.623Z"
+                }
+            },
+            "notes": {
+                "1": {
+                    "id": "1",
+                    "text": "Identified and removed the redundant import 'use tracing;' at line 21 in `rustquote_service/src/lib.rs`.",
+                    "type": "general",
+                    "created_at": "2025-05-21T22:04:18.402Z"
+                },
+                "2": {
+                    "id": "2",
+                    "text": "Verified the fix locally by running `cargo clippy` in the `rustquote_service` directory. The linter passed without errors related to the removed import.",
+                    "type": "general",
+                    "created_at": "2025-05-21T22:04:32.231Z"
+                }
+            },
+            "status": "new",
+            "created_at": "2025-05-21T22:03:39.603Z",
+            "updated_at": "2025-05-21T22:04:32.231Z"
         }
     }
 }
