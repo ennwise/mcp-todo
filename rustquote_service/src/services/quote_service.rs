@@ -8,7 +8,7 @@ use crate::models::quote::Quote;
 use serde_json;
 use std::fs;
 use std::io;
-use std::path::Path;
+use std::path::PathBuf; // Removed unused Path
 
 // Define a custom error type for quote loading issues
 #[derive(Debug)]
@@ -56,14 +56,14 @@ impl std::error::Error for QuoteServiceError {
 /// # Errors
 ///
 /// Returns `QuoteServiceError` if the file cannot be found, read, or parsed.
-pub fn load_quotes_from_file(file_path_str: &str) -> Result<Vec<Quote>, QuoteServiceError> {
-    let path = Path::new(file_path_str);
-
-    if !path.exists() {
-        return Err(QuoteServiceError::FileNotFound(file_path_str.to_string()));
+pub fn load_quotes_from_file(file_path: &PathBuf) -> Result<Vec<Quote>, QuoteServiceError> {
+    if !file_path.exists() {
+        return Err(QuoteServiceError::FileNotFound(
+            file_path.to_string_lossy().into_owned(),
+        ));
     }
 
-    let file_content = fs::read_to_string(path)
+    let file_content = fs::read_to_string(file_path)
         .map_err(QuoteServiceError::FileReadError)?;
 
     let quotes: Vec<Quote> = serde_json::from_str(&file_content)
@@ -125,7 +125,7 @@ mod tests {
             { "id": 2, "quote": "Test quote 2", "author": "Author 2", "source": null }
         ]"#;
         let temp_file = create_temp_json_file(sample_json);
-        let quotes = load_quotes_from_file(temp_file.path().to_str().unwrap()).unwrap();
+        let quotes = load_quotes_from_file(&temp_file.path().to_path_buf()).unwrap();
         assert_eq!(quotes.len(), 2);
         assert_eq!(quotes[0].id, 1);
         assert_eq!(quotes[0].text, "Test quote 1");
@@ -135,7 +135,7 @@ mod tests {
 
     #[test]
     fn test_load_quotes_file_not_found() {
-        let result = load_quotes_from_file("non_existent_file.json");
+        let result = load_quotes_from_file(&PathBuf::from("non_existent_file.json"));
         assert!(matches!(result, Err(QuoteServiceError::FileNotFound(_))));
     }
 
@@ -146,7 +146,7 @@ mod tests {
             { "id": 2, "text": "Test quote 2", "author": "Author 2", "source": null },, // extra comma
         ]"#;
         let temp_file = create_temp_json_file(invalid_json);
-        let result = load_quotes_from_file(temp_file.path().to_str().unwrap());
+        let result = load_quotes_from_file(&temp_file.path().to_path_buf());
         assert!(matches!(result, Err(QuoteServiceError::ParseError(_))));
     }
 
@@ -154,7 +154,7 @@ mod tests {
     fn test_load_quotes_empty_file() {
         let empty_json = "";
         let temp_file = create_temp_json_file(empty_json);
-        let result = load_quotes_from_file(temp_file.path().to_str().unwrap());
+        let result = load_quotes_from_file(&temp_file.path().to_path_buf());
         assert!(matches!(result, Err(QuoteServiceError::ParseError(_))));
     }
 
@@ -162,7 +162,7 @@ mod tests {
     fn test_load_quotes_empty_array() {
         let empty_array_json = "[]";
         let temp_file = create_temp_json_file(empty_array_json);
-        let quotes = load_quotes_from_file(temp_file.path().to_str().unwrap()).unwrap();
+        let quotes = load_quotes_from_file(&temp_file.path().to_path_buf()).unwrap();
         assert_eq!(quotes.len(), 0);
     }
 

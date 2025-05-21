@@ -7,6 +7,7 @@ use rustquote_service::responses::QuoteResponse;
 use rustquote_service::app; // Use the app router from the library
 use rustquote_service::AppState; // Import AppState
 use std::sync::Arc; // For AppState
+use std::path::PathBuf;
 use serde_json;
 // std::fs::File and std::io::Write are not directly needed in tests anymore if create_temp_quotes_file handles it
 use tempfile::NamedTempFile;
@@ -29,7 +30,7 @@ async fn test_get_quote_handler_success() {
     ]"#;
     let temp_file = create_temp_quotes_file(quotes_content);
     let app_state = AppState {
-        quotes_file_path: Arc::new(temp_file.path().to_str().unwrap().to_string()),
+        quotes_file_path: Arc::new(temp_file.path().to_path_buf()),
     };
     let router = app(app_state);
 
@@ -58,7 +59,7 @@ async fn test_get_quote_handler_success() {
 async fn test_get_quote_handler_empty_file() {
     let temp_file = create_temp_quotes_file("[]"); // Empty JSON array
     let app_state = AppState {
-        quotes_file_path: Arc::new(temp_file.path().to_str().unwrap().to_string()),
+        quotes_file_path: Arc::new(temp_file.path().to_path_buf()),
     };
     let router = app(app_state);
 
@@ -91,7 +92,7 @@ async fn test_get_quote_handler_file_not_found() {
     drop(temp_file); // Delete the temp file, ensuring path does not exist
 
     let app_state = AppState {
-        quotes_file_path: Arc::new(non_existent_path),
+        quotes_file_path: Arc::new(PathBuf::from(non_existent_path)),
     };
     let router = app(app_state);
 
@@ -121,7 +122,7 @@ async fn test_get_quote_handler_file_not_found() {
 async fn test_get_quote_handler_invalid_json() {
     let temp_file = create_temp_quotes_file("[{{\"id\":1, \"quote\":\"bad json\"}}]"); // Malformed JSON
     let app_state = AppState {
-        quotes_file_path: Arc::new(temp_file.path().to_str().unwrap().to_string()),
+        quotes_file_path: Arc::new(temp_file.path().to_path_buf()),
     };
     let router = app(app_state);
 
@@ -153,7 +154,7 @@ async fn test_get_quote_handler_malformed_quote_data() {
     ]"#; // Second quote is missing "quote"
     let temp_file = create_temp_quotes_file(malformed_quotes_content);
     let app_state = AppState {
-        quotes_file_path: Arc::new(temp_file.path().to_str().unwrap().to_string()),
+        quotes_file_path: Arc::new(temp_file.path().to_path_buf()),
     };
     let router = app(app_state);
 
@@ -184,7 +185,7 @@ async fn test_get_quote_handler_malformed_quote_data() {
 async fn test_health_check_handler() {
     // Health check doesn't use quotes_file_path, so a dummy one is fine.
     let dummy_app_state = AppState {
-        quotes_file_path: Arc::new("dummy_path_for_health_check.json".to_string()),
+        quotes_file_path: Arc::new(PathBuf::from("dummy_path_for_health_check.json")),
     };
     let router = app(dummy_app_state);
 
@@ -207,7 +208,7 @@ async fn test_get_quote_by_id_handler_success() {
     ]"#;
     let temp_file = create_temp_quotes_file(quotes_content);
     let app_state = AppState {
-        quotes_file_path: Arc::new(temp_file.path().to_str().unwrap().to_string()),
+        quotes_file_path: Arc::new(temp_file.path().to_path_buf()),
     };
     let router = app(app_state);
 
@@ -239,7 +240,7 @@ async fn test_get_quote_by_id_handler_not_found() {
     ]"#;
     let temp_file = create_temp_quotes_file(quotes_content);
     let app_state = AppState {
-        quotes_file_path: Arc::new(temp_file.path().to_str().unwrap().to_string()),
+        quotes_file_path: Arc::new(temp_file.path().to_path_buf()),
     };
     let router = app(app_state);
 
@@ -267,7 +268,7 @@ async fn test_get_quote_by_id_handler_not_found() {
 async fn test_get_quote_by_id_handler_empty_file_for_id_request() {
     let temp_file = create_temp_quotes_file("[]"); // Empty JSON array
     let app_state = AppState {
-        quotes_file_path: Arc::new(temp_file.path().to_str().unwrap().to_string()),
+        quotes_file_path: Arc::new(temp_file.path().to_path_buf()),
     };
     let router = app(app_state);
 
@@ -298,7 +299,7 @@ async fn test_get_quote_by_id_handler_file_not_found_for_id_request() {
     drop(temp_file); // Ensure file is deleted
 
     let app_state = AppState {
-        quotes_file_path: Arc::new(non_existent_path.clone()), // Clone for use in assert message
+        quotes_file_path: Arc::new(PathBuf::from(non_existent_path.clone())), // Clone for use in assert message
     };
     let router = app(app_state);
     

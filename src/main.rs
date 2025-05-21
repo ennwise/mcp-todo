@@ -5,6 +5,9 @@
 
 // The `rustquote_service` crate name comes from Cargo.toml's [package] name
 use rustquote_service::run_server;
+// Assuming config_manager.rs is in src/ alongside main.rs
+mod config_manager;
+use config_manager::load_config;
 
 /// The main entry point for the RustQuote service.
 ///
@@ -17,8 +20,20 @@ async fn main() {
     tracing_subscriber::fmt::init();
 
     tracing::info!("Binary: Starting server...");
-    let default_quotes_path = "data/quotes.json".to_string();
-    if let Err(e) = run_server(default_quotes_path).await {
+
+    // Load configuration
+    let app_config = match load_config() {
+        Ok(config) => {
+            tracing::info!("Binary: Configuration loaded successfully: {:?}", config);
+            config
+        }
+        Err(e) => {
+            tracing::error!("Binary: Failed to load configuration: {}", e);
+            std::process::exit(1);
+        }
+    };
+
+    if let Err(e) = run_server(app_config.server_address, app_config.quotes_file_path).await {
         tracing::error!("Binary: Server error: {}", e);
         std::process::exit(1);
     }

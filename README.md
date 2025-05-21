@@ -56,7 +56,28 @@ To run the service locally after building, use:
 cargo run
 ```
 
-The service will typically start on a default port (e.g., `localhost:8080` or `localhost:3000` - check application logs for the exact port).
+The service will start based on the configured server address and port. By default, this is `0.0.0.0:8080`.
+
+### Configuration
+
+The application can be configured using environment variables. For local development, you can create a `.env` file in the project root directory. An example file [` .env.example`](./.env.example:0) is provided.
+
+**Environment Variables:**
+
+*   `RUSTQUOTE_SERVER_ADDRESS`: The address and port for the server to listen on.
+    *   Default: `0.0.0.0:8080`
+    *   Example: `RUSTQUOTE_SERVER_ADDRESS=127.0.0.1:3000`
+*   `RUSTQUOTE_QUOTES_FILE_PATH`: The path to the JSON file containing the quotes.
+    *   Default: `data/quotes.json`
+    *   Example: `RUSTQUOTE_QUOTES_FILE_PATH=my_custom_quotes.json`
+
+To use a `.env` file for local development:
+
+1.  Copy [` .env.example`](./.env.example:0) to `.env`:
+    ```bash
+    cp .env.example .env
+    ```
+2.  Modify the values in `.env` as needed. The application will automatically load these variables when it starts.
 
 ## API Endpoints
 

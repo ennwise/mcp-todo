@@ -1146,22 +1146,158 @@
         "56": {
             "id": "56",
             "name": "1.4.3 Create .env.example for configurable settings",
-            "parent_id": "18",
-            "todos": {},
-            "notes": {},
-            "status": "new",
+            "parent_id": "71",
+            "todos": {
+                "1": {
+                    "id": "1",
+                    "text": "Identify settings currently hardcoded in the application that should be configurable. Based on previous analysis (Task 53), these include: \n    - Server listening address/port (e.g., `0.0.0.0:8080` in `src/lib.rs` or `src/main.rs`). \n    - Path to the quotes data file (e.g., `data/quotes.json` used in `src/api_handler.rs` or `src/services/quote_service.rs`, now likely managed via `AppState`).",
+                    "done": true,
+                    "created_at": "2025-05-21T21:37:36.642Z"
+                },
+                "2": {
+                    "id": "2",
+                    "text": "Create a new file named `.env.example` in the project root directory.",
+                    "done": true,
+                    "created_at": "2025-05-21T21:37:36.642Z"
+                },
+                "3": {
+                    "id": "3",
+                    "text": "For each identified configurable setting, add an entry to `.env.example` with a descriptive variable name and a sensible default value. For example: \n    `RUSTQUOTE_SERVER_ADDRESS=0.0.0.0:8080` \n    `RUSTQUOTE_QUOTES_FILE_PATH=data/quotes.json`",
+                    "done": true,
+                    "created_at": "2025-05-21T21:37:36.642Z"
+                },
+                "4": {
+                    "id": "4",
+                    "text": "Add comments in `.env.example` to explain each variable if necessary.",
+                    "done": true,
+                    "created_at": "2025-05-21T21:37:36.642Z"
+                },
+                "5": {
+                    "id": "5",
+                    "text": "Ensure the `.gitignore` file includes `.env` to prevent accidental committing of actual environment-specific configuration files.",
+                    "done": true,
+                    "created_at": "2025-05-21T21:37:36.642Z"
+                },
+                "6": {
+                    "id": "6",
+                    "text": "Save the `.env.example` file.",
+                    "done": true,
+                    "created_at": "2025-05-21T21:37:36.642Z"
+                },
+                "7": {
+                    "id": "7",
+                    "text": "Commit and push the new `.env.example` file and any changes to `.gitignore`.",
+                    "done": true,
+                    "created_at": "2025-05-21T21:37:36.642Z"
+                },
+                "8": {
+                    "id": "8",
+                    "text": "Verify the CI pipeline (GitHub Actions) runs successfully (this change should not affect CI build/test, but it's good practice to check).",
+                    "done": true,
+                    "created_at": "2025-05-21T21:37:36.642Z"
+                }
+            },
+            "notes": {
+                "1": {
+                    "id": "1",
+                    "text": "Created .env.example and updated .gitignore. Commit ID: d6580e7",
+                    "type": "general",
+                    "created_at": "2025-05-21T21:39:45.570Z"
+                }
+            },
+            "status": "finished",
             "created_at": "2025-05-21T19:24:23.198Z",
-            "updated_at": "2025-05-21T19:24:23.198Z"
+            "updated_at": "2025-05-21T21:39:57.033Z"
         },
         "57": {
             "id": "57",
             "name": "1.4.4 Implement config_manager.rs for loading configurations (server port, quotes file path)",
-            "parent_id": "18",
-            "todos": {},
-            "notes": {},
-            "status": "new",
+            "parent_id": "71",
+            "todos": {
+                "1": {
+                    "id": "1",
+                    "text": "Review the `.env.example` file (created in Task 56) to identify the environment variables to be loaded (e.g., `RUSTQUOTE_SERVER_ADDRESS`, `RUSTQUOTE_QUOTES_FILE_PATH`).",
+                    "done": true,
+                    "created_at": "2025-05-21T21:40:18.422Z"
+                },
+                "2": {
+                    "id": "2",
+                    "text": "Add a dependency for a crate to help with loading .env files, such as `dotenvy` (a maintained fork of `dotenv`). Add `dotenvy = \"0.15\"` (or latest version) to `Cargo.toml`.",
+                    "done": true,
+                    "created_at": "2025-05-21T21:40:18.422Z"
+                },
+                "3": {
+                    "id": "3",
+                    "text": "In `src/config_manager.rs` (or a new `src/config.rs` module if preferred, update `mod.rs` accordingly): \n    - Create a struct (e.g., `AppConfig`) to hold the configuration values (server address, quotes file path). \n    - Implement a function (e.g., `load_config() -> Result<AppConfig, ConfigError>`) that: \n        - Calls `dotenvy::dotenv().ok();` to load variables from a `.env` file if present (it's okay if it's not found, for production). \n        - Reads each required environment variable (e.g., using `std::env::var(\"RUSTQUOTE_SERVER_ADDRESS\")`). \n        - Provides sensible default values if an environment variable is not set (e.g., default to `0.0.0.0:8080` for server address, `data/quotes.json` for quotes path). \n        - Parses the values into the correct types (e.g., `String` for paths, potentially `SocketAddr` for server address or keep as String). \n        - Populates and returns the `AppConfig` struct. \n    - Define a custom error type (e.g., `ConfigError`) if needed for parsing or missing critical variables without defaults.",
+                    "done": true,
+                    "created_at": "2025-05-21T21:40:18.422Z"
+                },
+                "4": {
+                    "id": "4",
+                    "text": "In `src/main.rs` (or `src/lib.rs` where the app is initialized): \n    - Call your `load_config()` function early in the application startup.",
+                    "done": true,
+                    "created_at": "2025-05-21T21:40:18.422Z"
+                },
+                "5": {
+                    "id": "5",
+                    "text": "Modify the application logic to use the loaded configuration values from `AppConfig` instead of hardcoded values: \n    - For server address: Use the loaded address when starting the Axum server. \n    - For quotes file path: Pass this path to the `AppState` or directly to the `load_quotes_from_file` function.",
+                    "done": true,
+                    "created_at": "2025-05-21T21:40:18.422Z"
+                },
+                "6": {
+                    "id": "6",
+                    "text": "Update unit tests if necessary to mock or provide configuration for test runs, especially if defaults are not suitable for all tests.",
+                    "done": true,
+                    "created_at": "2025-05-21T21:40:18.422Z"
+                },
+                "7": {
+                    "id": "7",
+                    "text": "Update `README.md` to explain the new environment variables and how to use a `.env` file for local development.",
+                    "done": true,
+                    "created_at": "2025-05-21T21:40:18.422Z"
+                },
+                "8": {
+                    "id": "8",
+                    "text": "Run `cargo test` locally to ensure all tests pass.",
+                    "done": true,
+                    "created_at": "2025-05-21T21:40:18.422Z"
+                },
+                "9": {
+                    "id": "9",
+                    "text": "Manually test running the application locally using a `.env` file with custom values, and also without a `.env` file to ensure defaults are applied.",
+                    "done": false,
+                    "created_at": "2025-05-21T21:40:18.422Z"
+                },
+                "10": {
+                    "id": "10",
+                    "text": "Commit and push all changes.",
+                    "done": false,
+                    "created_at": "2025-05-21T21:40:18.422Z"
+                },
+                "11": {
+                    "id": "11",
+                    "text": "Verify the CI pipeline (GitHub Actions) runs successfully.",
+                    "done": false,
+                    "created_at": "2025-05-21T21:40:18.422Z"
+                }
+            },
+            "notes": {
+                "1": {
+                    "id": "1",
+                    "text": "Implemented `src/config_manager.rs` with `AppConfig` struct and `load_config()` function. It loads `RUSTQUOTE_SERVER_ADDRESS` and `RUSTQUOTE_QUOTES_FILE_PATH` from environment variables or `.env` file, with defaults to `0.0.0.0:8080` and `data/quotes.json` respectively. `dotenvy` crate is used for `.env` support. `src/main.rs` now calls `load_config()` and passes the values to `rustquote_service::run_server()`. `rustquote_service/src/lib.rs` was updated to accept `SocketAddr` and `PathBuf` in `run_server` and `AppState`. Basic unit tests for `config_manager.rs` are included.",
+                    "type": "general",
+                    "created_at": "2025-05-21T21:42:23.172Z"
+                },
+                "2": {
+                    "id": "2",
+                    "text": "Manual testing (Todo #9): \n- Test Case 1 (with .env providing RUSTQUOTE_SERVER_ADDRESS=127.0.0.1:9090 and RUSTQUOTE_QUOTES_FILE_PATH=data/alt_quotes.json) was successful. Server started on custom port and loaded custom config values as per logs.\n- Test Case 2 (default config) confirmed that default values (0.0.0.0:8080, data/quotes.json) are loaded as per logs. However, server startup failed due to 'Address already in use (os error 98)' for port 8080. This blocks full verification of serving a default quote. \nMarking Todo #9 as blocked until port issue can be resolved by lead-developer-mode or environment.",
+                    "type": "general",
+                    "created_at": "2025-05-21T21:52:59.543Z"
+                }
+            },
+            "status": "in progress",
             "created_at": "2025-05-21T19:24:23.198Z",
-            "updated_at": "2025-05-21T19:24:23.198Z"
+            "updated_at": "2025-05-21T21:52:59.543Z"
         },
         "58": {
             "id": "58",
@@ -1345,13 +1481,13 @@
                 "11": {
                     "id": "11",
                     "text": "Commit and push all changes.",
-                    "done": false,
+                    "done": true,
                     "created_at": "2025-05-21T21:32:10.950Z"
                 },
                 "12": {
                     "id": "12",
                     "text": "Verify the CI pipeline (GitHub Actions) runs successfully with these changes.",
-                    "done": false,
+                    "done": true,
                     "created_at": "2025-05-21T21:32:10.950Z"
                 }
             },
@@ -1367,11 +1503,17 @@
                     "text": "Discovered library path in `Cargo.toml`: `rustquote_service/src/lib.rs`. The service logic, including `get_quote_by_id`, `load_quotes_from_file`, API handlers, and router, will be located within the `rustquote_service` directory.",
                     "type": "general",
                     "created_at": "2025-05-21T21:33:32.640Z"
+                },
+                "3": {
+                    "id": "3",
+                    "text": "Waiting for CI pipeline to complete for commit `558fdbc` to verify changes for GET /api/v1/quote/{id} endpoint.",
+                    "type": "general",
+                    "created_at": "2025-05-21T21:37:02.760Z"
                 }
             },
-            "status": "in progress",
+            "status": "finished",
             "created_at": "2025-05-21T19:24:23.199Z",
-            "updated_at": "2025-05-21T21:36:44.161Z"
+            "updated_at": "2025-05-21T21:37:13.322Z"
         },
         "60": {
             "id": "60",
@@ -1814,7 +1956,7 @@
             "notes": {},
             "status": "new",
             "created_at": "2025-05-21T20:24:52.382Z",
-            "updated_at": "2025-05-21T21:32:21.778Z"
+            "updated_at": "2025-05-21T21:40:23.597Z"
         },
         "72": {
             "id": "72",

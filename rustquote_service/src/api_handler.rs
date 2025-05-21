@@ -36,7 +36,7 @@ pub async fn health_check_handler() -> (StatusCode, Json<HealthStatus>) {
 pub async fn get_quote_handler(
     State(app_state): State<AppState>, // Extract AppState
 ) -> Result<Json<QuoteResponse>, AppError> {
-    tracing::debug!("Received request for /api/v1/quote. Using quotes_file_path: {}", app_state.quotes_file_path);
+    tracing::debug!("Received request for /api/v1/quote. Using quotes_file_path: {}", app_state.quotes_file_path.display());
     match quote_service::load_quotes_from_file(&app_state.quotes_file_path) {
         Ok(quotes) => {
             if quotes.is_empty() { // Explicitly check for empty quotes vector
@@ -83,7 +83,7 @@ pub async fn get_quote_by_id_handler(
     tracing::debug!(
         "Received request for /api/v1/quote/{}. Using quotes_file_path: {}",
         id,
-        app_state.quotes_file_path
+        app_state.quotes_file_path.display()
     );
 
     match quote_service::load_quotes_from_file(&app_state.quotes_file_path) {
