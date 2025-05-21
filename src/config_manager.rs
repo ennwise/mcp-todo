@@ -11,10 +11,6 @@ pub struct AppConfig {
 
 #[derive(Error, Debug)]
 pub enum ConfigError {
-    #[error("Missing environment variable: {0}")]
-    MissingVariable(String),
-    #[error("Invalid environment variable format for {0}: {1}")]
-    InvalidFormat(String, String),
     #[error("Environment variable parsing error for {variable}: {source}")]
     VarError {
         variable: String,
