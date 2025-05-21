@@ -11,7 +11,7 @@
 * **Scope:**
     * **In Scope:** This workflow covers the end-to-end agile software development lifecycle, including product backlog management, sprint planning, iterative development and testing, sprint reviews, sprint retrospectives, release planning, and continuous improvement of the process. It orchestrates and integrates specialized sub-workflows for feature development, bug fixing, etc.
     * **Out of Scope:** Detailed pre-project portfolio management, long-term strategic business planning (though it consumes outputs from these), specific hardware infrastructure provisioning (though it relies on available environments).
-* **Intended Users/Modes:** ManagementMode (as primary orchestrator/facilitator), ProductManagerMode, LeadDeveloperMode, DeveloperMode(s), QAMode.
+* **Intended Users/Modes:** ManagementMode (as primary orchestrator/facilitator), ProductManagerMode, LeadDeveloperMode, RustDeveloperMode, DeveloperMode(s), QAMode.
 * **Success Indicators (High-Level):**
     * Regular delivery of working software.
     * High stakeholder and user satisfaction.
@@ -36,7 +36,7 @@
     * **Mode/Role:** LeadDeveloperMode (Scrum Master/Tech Lead proxy)
     * **Key Responsibilities:** Facilitating sprint events, coaching the team on agile practices, guiding technical execution, helping resolve technical impediments, ensuring Definition of Done is followed.
 * **Key Contributor(s) (The Development Team):**
-    * **Mode/Role:** DeveloperMode(s)
+    * **Mode/Role:** DeveloperMode(s), RustDeveloperMode
     * **Key Responsibilities:** Implementing backlog items (features, bug fixes, tech debt), writing unit tests, participating in code reviews, collaborating on design.
     * **Mode/Role:** QAMode(s)
     * **Key Responsibilities:** Test planning and execution within sprints, developing automated tests, ensuring quality standards, bug reporting and verification.

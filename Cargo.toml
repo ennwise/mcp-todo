@@ -4,3 +4,17 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+rand = "0.8"
+axum = "0.7"
+tokio = { version = "1", features = ["full"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["fmt"] }
+serde = { version = "1.0", features = ["derive"] } # Added for models
+serde_json = "1.0" # Added for JSON processing in services and potentially handlers
+
+[dev-dependencies]
+tempfile = "3.10.1" # For creating temporary files in tests
+# serde_json is already a main dependency, but good to note its use in tests.
+# If it were only for tests, it would go here.
+# tokio is already a main dependency.
+# axum is already a main dependency.

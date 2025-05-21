@@ -1,0 +1,122 @@
+{
+    "tasks": {
+        "1": {
+            "id": "1",
+            "name": "Parent Task",
+            "parent_id": null,
+            "todos": {
+                "1": {
+                    "id": "1",
+                    "text": "Setup project",
+                    "done": true,
+                    "created_at": "2025-05-21T04:42:42.026Z"
+                },
+                "2": {
+                    "id": "2",
+                    "text": "Write documentation",
+                    "done": true,
+                    "created_at": "2025-05-21T04:42:50.684Z"
+                },
+                "3": {
+                    "id": "3",
+                    "text": "Deploy to staging",
+                    "done": true,
+                    "created_at": "2025-05-21T04:42:50.684Z"
+                }
+            },
+            "notes": {
+                "1": {
+                    "id": "1",
+                    "text": "Initial project setup complete",
+                    "type": "general",
+                    "created_at": "2025-05-21T04:43:22.746Z"
+                },
+                "2": {
+                    "id": "2",
+                    "text": "Reviewed by QA",
+                    "type": "review",
+                    "created_at": "2025-05-21T04:43:29.184Z"
+                },
+                "3": {
+                    "id": "3",
+                    "text": "Ready for client demo",
+                    "type": "milestone",
+                    "created_at": "2025-05-21T04:43:29.184Z"
+                }
+            },
+            "status": "in progress",
+            "created_at": "2025-05-21T04:41:17.316Z",
+            "updated_at": "2025-05-21T04:43:46.311Z"
+        },
+        "2": {
+            "id": "2",
+            "name": "Child Task 1",
+            "parent_id": "1",
+            "todos": {},
+            "notes": {},
+            "status": "new",
+            "created_at": "2025-05-21T04:41:26.500Z",
+            "updated_at": "2025-05-21T04:41:26.500Z"
+        },
+        "3": {
+            "id": "3",
+            "name": "Child Task 2",
+            "parent_id": "1",
+            "todos": {},
+            "notes": {},
+            "status": "new",
+            "created_at": "2025-05-21T04:41:33.970Z",
+            "updated_at": "2025-05-21T04:44:41.010Z"
+        },
+        "4": {
+            "id": "4",
+            "name": "Bulk Task 1",
+            "parent_id": "6",
+            "todos": {},
+            "notes": {},
+            "status": "new",
+            "created_at": "2025-05-21T04:42:09.606Z",
+            "updated_at": "2025-05-21T04:44:20.426Z"
+        },
+        "5": {
+            "id": "5",
+            "name": "Grandchild Task 1",
+            "parent_id": "2",
+            "todos": {},
+            "notes": {},
+            "status": "new",
+            "created_at": "2025-05-21T04:42:09.606Z",
+            "updated_at": "2025-05-21T04:42:09.606Z"
+        },
+        "6": {
+            "id": "6",
+            "name": "Standalone Task",
+            "parent_id": null,
+            "todos": {},
+            "notes": {},
+            "status": "new",
+            "created_at": "2025-05-21T04:43:58.609Z",
+            "updated_at": "2025-05-21T04:44:41.010Z"
+        },
+        "7": {
+            "id": "7",
+            "name": "Bulk Link Child 1",
+            "parent_id": "3",
+            "todos": {},
+            "notes": {},
+            "status": "new",
+            "created_at": "2025-05-21T04:44:31.130Z",
+            "updated_at": "2025-05-21T04:44:41.010Z"
+        },
+        "8": {
+            "id": "8",
+            "name": "Bulk Link Child 2",
+            "parent_id": "6",
+            "todos": {},
+            "notes": {},
+            "status": "new",
+            "created_at": "2025-05-21T04:44:31.130Z",
+            "updated_at": "2025-05-21T04:44:41.010Z"
+        }
+    }
+}

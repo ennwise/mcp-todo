@@ -1,11 +1,9 @@
-// Placeholder for data models
-pub struct PlaceholderModel {
-    pub id: i32,
-    pub name: String,
-}
+use serde::{Deserialize, Serialize};
 
-impl PlaceholderModel {
-    pub fn display(&self) {
-        println!("PlaceholderModel: id={}, name={}", self.id, self.name);
-    }
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct Quote {
+    pub id: u32,
+    pub text: String,
+    pub author: String,
+    pub source: Option<String>,
 }
