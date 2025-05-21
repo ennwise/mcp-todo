@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  rustquote-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "31337:8080"
+    env_file:
+      - ./.env
+    container_name: rustquote-container-31337
