@@ -14,7 +14,12 @@
         "addNote",
         "setStatus",
         "addTodosBulk",
-        "toggleTodo"
+        "toggleTodo",
+        "getNotes",
+        "toggleTodosBulk",
+        "addTasksBulk",
+        "linkTask",
+        "addTodo"
       ]
     }
   }

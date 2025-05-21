@@ -3,7 +3,7 @@
 //! This module defines the standard structures used for serializing API responses.
 //! These structs are used by the API handlers to provide consistent JSON outputs.
 
-use serde::Serialize;
+use serde::{Serialize, Deserialize}; // Add Deserialize
 
 /// Represents the health status of the service.
 ///
@@ -17,7 +17,7 @@ pub struct HealthStatus {
 /// Represents a quote response.
 ///
 /// Used as the success response for the `/api/v1/quote` endpoint.
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize)] // Add Deserialize
 pub struct QuoteResponse {
     /// The text of the quote.
     pub quote: String,

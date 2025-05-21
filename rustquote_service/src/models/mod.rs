@@ -5,3 +5,4 @@
 //! containing specific model definitions.
 
 pub mod quote;
+pub use self::quote::Quote; // Re-export Quote struct

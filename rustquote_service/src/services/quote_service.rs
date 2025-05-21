@@ -121,8 +121,8 @@ mod tests {
     #[test]
     fn test_load_quotes_successfully() {
         let sample_json = r#"[
-            { "id": 1, "text": "Test quote 1", "author": "Author 1", "source": "Source 1" },
-            { "id": 2, "text": "Test quote 2", "author": "Author 2", "source": null }
+            { "id": 1, "quote": "Test quote 1", "author": "Author 1", "source": "Source 1" },
+            { "id": 2, "quote": "Test quote 2", "author": "Author 2", "source": null }
         ]"#;
         let temp_file = create_temp_json_file(sample_json);
         let quotes = load_quotes_from_file(temp_file.path().to_str().unwrap()).unwrap();

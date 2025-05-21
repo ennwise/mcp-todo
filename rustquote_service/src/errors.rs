@@ -5,6 +5,7 @@
 //! for Axum to automatically convert `AppError` into HTTP responses.
 
 use axum::{
+    // body, // Removed as axum::body::to_bytes will be used directly
     http::StatusCode,
     response::{IntoResponse, Response},
     Json,
@@ -134,7 +135,7 @@ mod tests {
         let error = AppError::InternalServerError("Test internal error".to_string());
         let response = error.into_response();
         assert_eq!(response.status(), StatusCode::INTERNAL_SERVER_ERROR);
-        let body = hyper::body::to_bytes(response.into_body()).await.unwrap();
+        let body = axum::body::to_bytes(response.into_body(), 1024 * 1024).await.unwrap(); // Use axum::body::to_bytes with limit
         let expected_json = json!({
             "error_code": "INTERNAL_SERVER_ERROR",
             "message": "Test internal error"
@@ -147,7 +148,7 @@ mod tests {
         let error = AppError::NotFound("Resource not here".to_string());
         let response = error.into_response();
         assert_eq!(response.status(), StatusCode::NOT_FOUND);
-        let body = hyper::body::to_bytes(response.into_body()).await.unwrap();
+        let body = axum::body::to_bytes(response.into_body(), 1024 * 1024).await.unwrap(); // Use axum::body::to_bytes with limit
         let expected_json = json!({
             "error_code": "NOT_FOUND",
             "message": "Resource not here"
@@ -160,7 +161,7 @@ mod tests {
         let error = AppError::BadRequest("Bad input".to_string());
         let response = error.into_response();
         assert_eq!(response.status(), StatusCode::BAD_REQUEST);
-        let body = hyper::body::to_bytes(response.into_body()).await.unwrap();
+        let body = axum::body::to_bytes(response.into_body(), 1024 * 1024).await.unwrap(); // Use axum::body::to_bytes with limit
         let expected_json = json!({
             "error_code": "BAD_REQUEST",
             "message": "Bad input"
@@ -173,7 +174,7 @@ mod tests {
         let error = AppError::QuoteSourcingError("Could not get quotes".to_string());
         let response = error.into_response();
         assert_eq!(response.status(), StatusCode::INTERNAL_SERVER_ERROR); // As per current impl
-        let body = hyper::body::to_bytes(response.into_body()).await.unwrap();
+        let body = axum::body::to_bytes(response.into_body(), 1024 * 1024).await.unwrap(); // Use axum::body::to_bytes with limit
         let expected_json = json!({
             "error_code": "QUOTE_SOURCING_ERROR",
             "message": "Could not get quotes"

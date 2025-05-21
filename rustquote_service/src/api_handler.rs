@@ -3,8 +3,9 @@
 //! This module contains the Axum handlers for the API endpoints.
 //! It defines the logic for responding to HTTP requests for health checks and quote retrieval.
 
-use axum::{http::StatusCode, Json};
+use axum::{http::StatusCode, Json, extract::State}; // Added State
 use crate::services::quote_service;
+use crate::AppState; // Import AppState
 // Quote model is not directly used here anymore for response construction, but might be for logic
 // use crate::models::Quote;
 use crate::responses::{HealthStatus, QuoteResponse}; // ErrorResponse is now handled by AppError
@@ -32,12 +33,17 @@ pub async fn health_check_handler() -> (StatusCode, Json<HealthStatus>) {
 ///
 /// Returns an [`AppError::NotFound`] if no quotes are available.
 /// Returns an [`AppError::InternalServerError`] if there's an issue loading quotes.
-pub async fn get_quote_handler() -> Result<Json<QuoteResponse>, AppError> {
-    tracing::debug!("Received request for /api/v1/quote");
-    // TODO: Make the quotes file path configurable
-    match quote_service::load_quotes_from_file("data/quotes.json") {
+pub async fn get_quote_handler(
+    State(app_state): State<AppState>, // Extract AppState
+) -> Result<Json<QuoteResponse>, AppError> {
+    tracing::debug!("Received request for /api/v1/quote. Using quotes_file_path: {}", app_state.quotes_file_path);
+    match quote_service::load_quotes_from_file(&app_state.quotes_file_path) {
         Ok(quotes) => {
-            if let Some(random_quote) = quote_service::get_random_quote(&quotes) {
+            if quotes.is_empty() { // Explicitly check for empty quotes vector
+                Err(AppError::NotFound(
+                    "No quotes available in the data file.".to_string(),
+                ))
+            } else if let Some(random_quote) = quote_service::get_random_quote(&quotes) {
                 let response = QuoteResponse {
                     quote: random_quote.text.clone(),
                     author: random_quote.author.clone(),
@@ -45,14 +51,17 @@ pub async fn get_quote_handler() -> Result<Json<QuoteResponse>, AppError> {
                 tracing::info!("Successfully retrieved and returned a random quote.");
                 Ok(Json(response))
             } else {
-                // Use AppError for no quotes available
-                Err(AppError::NotFound(
-                    "No quotes available in the data file.".to_string(),
+                // This branch should ideally not be hit if quotes.is_empty() is checked above
+                // but kept for safety, or if get_random_quote could fail for other reasons on non-empty.
+                Err(AppError::NotFound( // Should be unreachable if quotes.is_empty() is handled
+                    "Could not select a random quote (unexpected).".to_string(),
                 ))
             }
         }
         Err(service_error) => {
-            tracing::error!("Failed to load quotes: {}", service_error);
+            // Log the specific service_error for better diagnostics
+            tracing::error!("Quote service error during load_quotes_from_file: {:?}", service_error); // Changed to debug print
+            tracing::error!("Failed to load quotes (display): {}", service_error);
             // Convert QuoteServiceError to AppError using the From trait
             Err(AppError::from(service_error))
         }

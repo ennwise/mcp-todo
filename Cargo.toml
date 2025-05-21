@@ -3,6 +3,9 @@ name = "rustquote_service"
 version = "0.1.0"
 edition = "2021"
 
+[lib]
+path = "rustquote_service/src/lib.rs"
+
 [dependencies]
 rand = "0.8"
 axum = "0.7"
@@ -16,6 +19,8 @@ thiserror = "1.0" # For custom error handling
 [dev-dependencies]
 cargo-tarpaulin = "0.27" # For code coverage
 tempfile = "3.10.1" # For creating temporary files in tests
+tower = { version = "0.5.2", features = ["util"] } # For ServiceExt in tests
+hyper = { version = "1.6.0", features = ["full"] } # For body utilities in tests if not covered by axum::body
 # serde_json is already a main dependency, but good to note its use in tests.
 # If it were only for tests, it would go here.
 # tokio is already a main dependency.
