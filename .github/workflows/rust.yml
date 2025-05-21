@@ -26,30 +26,30 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y pkg-config libssl-dev
-
+ 
       - name: Cache Rust dependencies
         uses: Swatinem/rust-cache@v2
         with:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-
+ 
       - name: Install cargo-tarpaulin
-        run: cargo install cargo-tarpaulin --version 0.27.1 # Pinned version for stability
-
+        run: cargo install cargo-tarpaulin --version 0.29.0 # Pinned version for stability
+ 
       - name: Build
         run: cargo build --verbose --release
-
+ 
       - name: Run tests
         run: cargo test --verbose
-
+ 
       - name: Run linter (Clippy)
         run: cargo clippy -- -D warnings
-
+ 
       - name: Check formatting (rustfmt)
         run: cargo fmt --check
-
+ 
       - name: Generate code coverage (Tarpaulin)
-        run: cargo tarpaulin --verbose --out Lcov --output-dir ./coverage --run-types Tests --engine llvm --timeout 120
-
+        run: cargo tarpaulin --verbose --out Lcov --output-dir ./coverage --run-types Tests --engine ptrace --timeout 120
+ 
       - name: Upload coverage report as artifact
         uses: actions/upload-artifact@v4
         with:

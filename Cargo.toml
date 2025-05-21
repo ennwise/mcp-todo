@@ -18,7 +18,7 @@ thiserror = "1.0" # For custom error handling
 dotenvy = "0.15" # For loading .env files
 
 [dev-dependencies]
-cargo-tarpaulin = "0.27" # For code coverage
+cargo-tarpaulin = "0.29.0" # For code coverage
 tempfile = "3.10.1" # For creating temporary files in tests
 serial_test = "3.0.0" # For running tests serially
 tower = { version = "0.5.2", features = ["util"] } # For ServiceExt in tests
