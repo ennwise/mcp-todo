@@ -19,6 +19,8 @@ pub struct HealthStatus {
 /// Used as the success response for the `/api/v1/quote` endpoint.
 #[derive(Serialize, Deserialize)] // Add Deserialize
 pub struct QuoteResponse {
+    /// The unique identifier of the quote.
+    pub id: u32,
     /// The text of the quote.
     pub quote: String,
     /// The author of the quote.

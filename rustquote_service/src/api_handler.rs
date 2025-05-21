@@ -49,6 +49,7 @@ pub async fn get_quote_handler(
                 ))
             } else if let Some(random_quote) = quote_service::get_random_quote(&quotes) {
                 let response = QuoteResponse {
+                    id: random_quote.id,
                     quote: random_quote.text.clone(),
                     author: random_quote.author.clone(),
                 };
@@ -109,6 +110,7 @@ pub async fn get_quote_by_id_handler(
 
             if let Some(quote) = quote_service::get_quote_by_id(&quotes, id) {
                 let response = QuoteResponse {
+                    id: quote.id,
                     quote: quote.text.clone(),
                     author: quote.author.clone(),
                 };
