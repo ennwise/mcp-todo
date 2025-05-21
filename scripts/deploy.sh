@@ -4,8 +4,8 @@ set -e
 IMAGE_NAME="rustquote-service"
 IMAGE_TAG="latest"
 CONTAINER_NAME="rustquote-container"
-DOCKERFILE_PATH="./rust_quote_service/Dockerfile"
-BUILD_CONTEXT="./rust_quote_service"
+DOCKERFILE_PATH="./Dockerfile"
+BUILD_CONTEXT="."
 
 echo "Building Docker image ${IMAGE_NAME}:${IMAGE_TAG}..."
 # Ensure the script is run from the root of the project for correct paths

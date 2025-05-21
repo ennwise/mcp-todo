@@ -53,5 +53,6 @@ pub fn app(app_state: AppState) -> Router {
     Router::new()
         .route("/api/health", get(api_handler::health_check_handler))
         .route("/api/v1/quote", get(api_handler::get_quote_handler))
+        .route("/api/v1/quote/:id", get(api_handler::get_quote_by_id_handler))
         .with_state(app_state) // Share AppState with handlers
 }

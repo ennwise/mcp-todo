@@ -198,3 +198,126 @@ async fn test_health_check_handler() {
     let health_status: serde_json::Value = serde_json::from_slice(&body).unwrap();
     assert_eq!(health_status["status"], "healthy");
 }
+#[tokio::test]
+async fn test_get_quote_by_id_handler_success() {
+    let quotes_content = r#"[
+        {"id": 1, "quote": "Quote number one.", "author": "Author One", "source": "Source One"},
+        {"id": 2, "quote": "Quote number two.", "author": "Author Two", "source": null},
+        {"id": 3, "quote": "Quote number three.", "author": "Author Three", "source": "Source Three"}
+    ]"#;
+    let temp_file = create_temp_quotes_file(quotes_content);
+    let app_state = AppState {
+        quotes_file_path: Arc::new(temp_file.path().to_str().unwrap().to_string()),
+    };
+    let router = app(app_state);
+
+    let target_id = 2;
+    let response = router
+        .oneshot(
+            Request::builder()
+                .uri(format!("/api/v1/quote/{}", target_id))
+                .body(Body::empty())
+                .unwrap(),
+        )
+        .await
+        .unwrap();
+
+    assert_eq!(response.status(), StatusCode::OK);
+
+    let body = body::to_bytes(response.into_body(), 1024 * 1024).await.unwrap();
+    let quote_response: QuoteResponse = serde_json::from_slice(&body)
+        .expect("Failed to deserialize quote response for get_quote_by_id_handler_success");
+
+    assert_eq!(quote_response.quote, "Quote number two.");
+    assert_eq!(quote_response.author, "Author Two");
+}
+
+#[tokio::test]
+async fn test_get_quote_by_id_handler_not_found() {
+    let quotes_content = r#"[
+        {"id": 1, "quote": "Only one quote here.", "author": "Single Author", "source": "Single Source"}
+    ]"#;
+    let temp_file = create_temp_quotes_file(quotes_content);
+    let app_state = AppState {
+        quotes_file_path: Arc::new(temp_file.path().to_str().unwrap().to_string()),
+    };
+    let router = app(app_state);
+
+    let non_existent_id = 999;
+    let response = router
+        .oneshot(
+            Request::builder()
+                .uri(format!("/api/v1/quote/{}", non_existent_id))
+                .body(Body::empty())
+                .unwrap(),
+        )
+        .await
+        .unwrap();
+
+    assert_eq!(response.status(), StatusCode::NOT_FOUND);
+    let body = body::to_bytes(response.into_body(), 1024 * 1024).await.unwrap();
+    let error_response: serde_json::Value = serde_json::from_slice(&body)
+        .expect("Failed to deserialize error response for get_quote_by_id_handler_not_found");
+    
+    assert_eq!(error_response["message"], format!("Quote with ID: {} not found.", non_existent_id));
+    assert_eq!(error_response["error_code"], "NOT_FOUND");
+}
+
+#[tokio::test]
+async fn test_get_quote_by_id_handler_empty_file_for_id_request() {
+    let temp_file = create_temp_quotes_file("[]"); // Empty JSON array
+    let app_state = AppState {
+        quotes_file_path: Arc::new(temp_file.path().to_str().unwrap().to_string()),
+    };
+    let router = app(app_state);
+
+    let target_id = 1; // Any ID, as the file is empty
+    let response = router
+        .oneshot(
+            Request::builder()
+                .uri(format!("/api/v1/quote/{}", target_id))
+                .body(Body::empty())
+                .unwrap(),
+        )
+        .await
+        .unwrap();
+
+    assert_eq!(response.status(), StatusCode::NOT_FOUND);
+    let body = body::to_bytes(response.into_body(), 1024 * 1024).await.unwrap();
+    let error_response: serde_json::Value = serde_json::from_slice(&body)
+        .expect("Failed to deserialize error response for get_quote_by_id_handler_empty_file_for_id_request");
+
+    assert_eq!(error_response["message"], format!("No quotes available in the data file. Cannot find quote with ID: {}.", target_id));
+    assert_eq!(error_response["error_code"], "NOT_FOUND");
+}
+
+#[tokio::test]
+async fn test_get_quote_by_id_handler_file_not_found_for_id_request() {
+    let temp_file = NamedTempFile::new().unwrap();
+    let non_existent_path = temp_file.path().to_str().unwrap().to_string();
+    drop(temp_file); // Ensure file is deleted
+
+    let app_state = AppState {
+        quotes_file_path: Arc::new(non_existent_path.clone()), // Clone for use in assert message
+    };
+    let router = app(app_state);
+    
+    let target_id = 1;
+    let response = router
+        .oneshot(
+            Request::builder()
+                .uri(format!("/api/v1/quote/{}", target_id))
+                .body(Body::empty())
+                .unwrap(),
+        )
+        .await
+        .unwrap();
+
+    assert_eq!(response.status(), StatusCode::INTERNAL_SERVER_ERROR);
+    let body = body::to_bytes(response.into_body(), 1024 * 1024).await.unwrap();
+    let error_response: serde_json::Value = serde_json::from_slice(&body)
+        .expect("Failed to deserialize error response for get_quote_by_id_handler_file_not_found_for_id_request");
+
+    assert!(error_response["message"].as_str().unwrap().contains(&format!("Quote data file not found: {}", non_existent_path)));
+    assert_eq!(error_response["error_code"], "QUOTE_SOURCING_ERROR");
+}

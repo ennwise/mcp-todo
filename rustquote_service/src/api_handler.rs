@@ -67,3 +67,58 @@ pub async fn get_quote_handler(
         }
     }
 }
+/// Handles requests to the `/api/v1/quote/:id` endpoint.
+///
+/// Attempts to load quotes from the configured data file, finds the quote by ID,
+/// and returns it in a JSON response.
+///
+/// # Errors
+///
+/// Returns an [`AppError::NotFound`] if the quote with the specified ID is not found or no quotes are available.
+/// Returns an [`AppError::InternalServerError`] or [`AppError::QuoteSourcingError`] if there's an issue loading quotes.
+pub async fn get_quote_by_id_handler(
+    State(app_state): State<AppState>,
+    axum::extract::Path(id): axum::extract::Path<u32>,
+) -> Result<Json<QuoteResponse>, AppError> {
+    tracing::debug!(
+        "Received request for /api/v1/quote/{}. Using quotes_file_path: {}",
+        id,
+        app_state.quotes_file_path
+    );
+
+    match quote_service::load_quotes_from_file(&app_state.quotes_file_path) {
+        Ok(quotes) => {
+            if quotes.is_empty() {
+                tracing::warn!("No quotes available in the data file when searching for ID: {}", id);
+                return Err(AppError::NotFound(format!(
+                    "No quotes available in the data file. Cannot find quote with ID: {}.",
+                    id
+                )));
+            }
+
+            if let Some(quote) = quote_service::get_quote_by_id(&quotes, id) {
+                let response = QuoteResponse {
+                    quote: quote.text.clone(),
+                    author: quote.author.clone(),
+                };
+                tracing::info!("Successfully retrieved and returned quote with ID: {}", id);
+                Ok(Json(response))
+            } else {
+                tracing::info!("Quote with ID: {} not found.", id);
+                Err(AppError::NotFound(format!(
+                    "Quote with ID: {} not found.",
+                    id
+                )))
+            }
+        }
+        Err(service_error) => {
+            tracing::error!(
+                "Quote service error during load_quotes_from_file for ID {}: {:?}",
+                id,
+                service_error
+            );
+            tracing::error!("Failed to load quotes (display): {}", service_error);
+            Err(AppError::from(service_error)) // Converts QuoteServiceError to AppError
+        }
+    }
+}
