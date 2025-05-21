@@ -1,0 +1,43 @@
+# Ignore build artifacts
+target/
+debug/
+release/
+
+# Ignore Git repository data
+.git/
+.gitignore
+
+# Ignore IDE/editor specific files
+.vscode/
+.idea/
+*.iml
+*.code-workspace
+
+# Ignore log files
+*.log
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore documentation (if not needed in the image)
+docs/
+README.md
+CONTRIBUTING.md
+LICENSE
+
+# Ignore local development files or temporary files
+tmp/
+temp/
+*.tmp
+*.swp
+*.swo
+
+# Ignore specific files if they are large and not needed
+# e.g. large_test_data.bin
+
+# Ignore any other files or directories not needed for the final image
+.env
+.env.*
+*.bk
+*.bak

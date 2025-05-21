@@ -1,0 +1,77 @@
+openapi: 3.0.0
+info:
+  title: RustQuote Service
+  version: 0.1.0
+  description: API for the RustQuote Service, providing random quotes and health status.
+tags:
+  - name: Status
+    description: API endpoints related to service status.
+  - name: Quotes
+    description: API endpoints for retrieving quotes.
+paths:
+  /api/health:
+    get:
+      summary: Health Check
+      description: Returns the health status of the service.
+      operationId: healthCheck
+      tags:
+        - Status
+      responses:
+        '200':
+          description: Service is healthy.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+  /api/v1/quote:
+    get:
+      summary: Get a random quote
+      description: Retrieves a random quote from the collection.
+      operationId: getRandomQuote
+      tags:
+        - Quotes
+      responses:
+        '200':
+          description: A random quote.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuoteResponse'
+        '404':
+          description: No quotes available or resource not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: healthy
+    QuoteResponse:
+      type: object
+      properties:
+        quote:
+          type: string
+          example: The only way to do great work is to love what you do.
+        author:
+          type: string
+          example: Steve Jobs
+    ErrorResponse:
+      type: object
+      properties:
+        error_code:
+          type: string
+          example: NOT_FOUND
+        message:
+          type: string
+          example: No quotes available in the data file.

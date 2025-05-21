@@ -1,20 +1,46 @@
+//! # Quote Data Model
+//!
+//! This module defines the `Quote` struct, which represents a quotation
+//! along with its author and optional source.
+
 use serde::{Serialize, Deserialize};
 
 // WBS 2.4: Implement Quote Formatting Logic
 // For the MVP, the Quote struct is directly serialized for API responses.
 // The `text` field is renamed to `quote` to match the API specification.
 // Extra fields like `id` and `source` may be present in the response but are acceptable.
+
+/// Represents a quote with its associated metadata.
+///
+/// This struct is used for storing, retrieving, and serializing quote data.
+/// It includes fields for a unique ID, the quote text, the author, and an optional source.
+/// The `text` field is serialized as `quote` in JSON to match API specifications.
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct Quote {
+    /// A unique identifier for the quote.
     pub id: u32,
+    /// The text content of the quote. Serialized as "quote".
     #[serde(rename = "quote")]
     pub text: String,
+    /// The author of the quote.
     pub author: String,
+    /// An optional source for the quote (e.g., book, speech).
     pub source: Option<String>,
 }
 
 impl Quote {
-    // A constructor might be useful later
+    /// Constructs a new `Quote`.
+    ///
+    /// # Arguments
+    ///
+    /// * `id` - The unique identifier for the quote.
+    /// * `text` - The text content of the quote.
+    /// * `author` - The author of the quote.
+    /// * `source` - An optional source for the quote.
+    ///
+    /// # Returns
+    ///
+    /// A new instance of `Quote`.
     pub fn new(id: u32, text: String, author: String, source: Option<String>) -> Self {
         Quote {
             id,

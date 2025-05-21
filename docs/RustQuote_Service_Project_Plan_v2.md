@@ -64,7 +64,7 @@ Stateless RESTful API, single lightweight microservice/monolith, P95 response <2
 
 ## 3. Key Stakeholders
 1.  **User/Client (The User):** Project initiator, primary recipient, approver.
-2.  **ManagementMode:** Planning, coordination, oversight.
+2.  **management-mode:** Planning, coordination, oversight.
 3.  **ArchitectMode:** Technical scope, high-level design.
 4.  **LeadDeveloperMode (Anticipated):** Guiding development, task breakdown.
 5.  **DeveloperMode (Anticipated):** Implementing features.
@@ -320,7 +320,7 @@ This plan assumes a small, focused team for an MVP. Roles may be combined.
 *   **Project Sponsor (e.g., Head of Product/Innovation):** Provides funding, strategic direction, and ultimate approval.
 *   **Product Owner:** Represents business and user needs, manages the product backlog, and defines acceptance criteria.
 *   **Development Team (Rust Developers, QA Engineers, DevOps):** Responsible for designing, building, testing, and deploying the service.
-*   **Project Manager/Scrum Master (ManagementMode):** Facilitates the project, removes impediments, and ensures adherence to processes.
+*   **Project Manager/Scrum Master (management-mode):** Facilitates the project, removes impediments, and ensures adherence to processes.
 *   **Steering Committee (if applicable):** Senior management group providing oversight and major decision-making.
 *   **Potential End-Users/Beta Testers:** Provide feedback on usability and functionality.
 *   **External Data Providers (if applicable):** Entities providing APIs or data feeds crucial for the service.

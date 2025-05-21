@@ -11,8 +11,10 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["fmt"] }
 serde = { version = "1.0", features = ["derive"] } # Added for models
 serde_json = "1.0" # Added for JSON processing in services and potentially handlers
+thiserror = "1.0" # For custom error handling
 
 [dev-dependencies]
+cargo-tarpaulin = "0.27" # For code coverage
 tempfile = "3.10.1" # For creating temporary files in tests
 # serde_json is already a main dependency, but good to note its use in tests.
 # If it were only for tests, it would go here.

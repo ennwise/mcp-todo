@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "project-task-manager": {
+      "command": "node",
+      "args": [
+        "/workspaces/mcp-todo/.roo/task-mcp/build/task_server.js"
+      ],
+      "env": {},
+      "cwd": "/workspaces/mcp-todo/.roo/task-mcp",
+      "disabled": false,
+      "alwaysAllow": [
+        "listTasks",
+        "addTask",
+        "addNote",
+        "setStatus",
+        "addTodosBulk",
+        "toggleTodo"
+      ]
+    }
+  }
+}

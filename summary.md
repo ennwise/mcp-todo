@@ -87,7 +87,7 @@
 
 ---
 
-### Note 3: Summary of Changes in RustQuote_Service_Project_Plan_v2.md (by TechnicalWriterMode)
+### Note 3: Summary of Changes in RustQuote_Service_Project_Plan_v2.md (by technical-writer-mode)
 
 [`RustQuote_Service_Project_Plan_v2.md`](RustQuote_Service_Project_Plan_v2.md) created. Key changes:
 *   Unified WBS identifiers between Section 4 and Section 5.2 (Project Timeline).

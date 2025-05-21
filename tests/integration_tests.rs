@@ -222,5 +222,5 @@ async fn test_health_check_handler() {
     assert_eq!(response.status(), StatusCode::OK);
     let body = hyper::body::to_bytes(response.into_body()).await.unwrap();
     let health_status: serde_json::Value = serde_json::from_slice(&body).unwrap();
-    assert_eq!(health_status["status"], "healthy");
+    assert_eq!(health_status["status"], "ok");
 }

@@ -1,3 +1,8 @@
+//! # RustQuote Service
+//!
+//! This crate provides a web service for fetching quotes.
+//! It uses Axum for the web framework and Tokio as the asynchronous runtime.
+
 mod api_handler;
 mod responses;
 mod config_manager;
@@ -9,7 +14,12 @@ mod errors;
 
 use axum::{routing::get, Router};
 use std::net::SocketAddr;
+use tokio::net::TcpListener;
 
+/// The main entry point for the RustQuote service.
+///
+/// Initializes the tracing subscriber for logging, sets up the Axum router
+/// with API endpoints, and starts the HTTP server.
 #[tokio::main]
 async fn main() {
     // Initialize tracing
@@ -22,14 +32,12 @@ async fn main() {
 
     // Define the address to listen on
     // TODO: Make this configurable (e.g., from environment variable or config file)
-    let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
+    let addr = SocketAddr::from(([0, 0, 0, 0], 8080)); // Changed port to 8080
     tracing::info!("listening on {}", addr);
 
     // Run the server
-    axum::Server::bind(&addr)
-        .serve(app.into_make_service())
-        .await
-        .unwrap();
+    let listener = TcpListener::bind(addr).await.unwrap();
+    axum::serve(listener, app.into_make_service()).await.unwrap();
 
     // The old main function content is removed as it's replaced by the server.
     // The quote loading and demonstration logic will be moved to appropriate API handlers later.

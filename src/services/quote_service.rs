@@ -1,4 +1,10 @@
-use crate::models::Quote;
+//! # Quote Service
+//!
+//! This module provides services related to managing and retrieving quotes.
+//! It includes functionality for loading quotes from a data source,
+//! and fetching specific or random quotes.
+
+use crate::models::quote::Quote;
 use serde_json;
 use std::fs;
 use std::io;
@@ -13,7 +19,7 @@ pub enum QuoteServiceError {
 }
 
 impl std::fmt::Display for QuoteServiceError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<&'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             QuoteServiceError::FileNotFound(path) => write!(f, "Quote data file not found at path: {}", path),
             QuoteServiceError::FileReadError(err) => write!(f, "Error reading quote data file: {}", err),
@@ -22,7 +28,16 @@ impl std::fmt::Display for QuoteServiceError {
     }
 }
 
+/// Implements the `std::error::Error` trait for [`QuoteServiceError`].
+///
+/// This allows [`QuoteServiceError`] to be used as a standard Rust error type,
+/// enabling features like error chaining.
 impl std::error::Error for QuoteServiceError {
+    /// Returns the underlying cause of the error, if any.
+    ///
+    /// For `FileReadError` and `ParseError` variants, this will return the
+    /// wrapped `io::Error` or `serde_json::Error` respectively.
+    /// For `FileNotFound`, it returns `None`.
     fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
         match self {
             QuoteServiceError::FileReadError(err) => Some(err),
@@ -57,9 +72,17 @@ pub fn load_quotes_from_file(file_path_str: &str) -> Result<Vec<Quote>, QuoteSer
     Ok(quotes)
 }
 
-/// Returns a random quote from a vector of Quotes.
-/// Returns None if the vector is empty.
-pub fn get_random_quote(quotes: &Vec<Quote>) -> Option<&Quote> {
+/// Returns a random quote from a slice of [`Quote`]s.
+///
+/// # Arguments
+///
+/// * `quotes` - A slice of [`Quote`] structs from which to select a random quote.
+///
+/// # Returns
+///
+/// An `Option` containing a reference to a random [`Quote`] if the slice is not empty,
+/// otherwise `None`.
+pub fn get_random_quote(quotes: &[Quote]) -> Option<&Quote> {
     if quotes.is_empty() {
         None
     } else {
@@ -69,9 +92,17 @@ pub fn get_random_quote(quotes: &Vec<Quote>) -> Option<&Quote> {
     }
 }
 
-/// Finds and returns a quote by its ID.
-/// Returns None if no quote with the given ID is found.
-pub fn get_quote_by_id(quotes: &Vec<Quote>, id: u32) -> Option<&Quote> {
+/// Finds and returns a reference to a quote by its ID from a slice of [`Quote`]s.
+///
+/// # Arguments
+///
+/// * `quotes` - A slice of [`Quote`] structs to search within.
+/// * `id` - The ID of the quote to find.
+///
+/// # Returns
+///
+/// An `Option` containing a reference to the [`Quote`] if found, otherwise `None`.
+pub fn get_quote_by_id(quotes: &[Quote], id: u32) -> Option<&Quote> {
     quotes.iter().find(|q| q.id == id)
 }
 
