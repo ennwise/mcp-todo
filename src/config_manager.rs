@@ -52,7 +52,11 @@ pub fn load_config() -> Result<AppConfig, ConfigError> {
     let quotes_file_path_str = env::var("RUSTQUOTE_QUOTES_FILE_PATH")
         .unwrap_or_else(|_| DEFAULT_QUOTES_FILE_PATH.to_string());
 
-    let quotes_file_path = PathBuf::from(quotes_file_path_str);
+    let quotes_file_path = if PathBuf::from(&quotes_file_path_str).is_absolute() {
+        PathBuf::from(quotes_file_path_str)
+    } else {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(quotes_file_path_str)
+    };
 
     Ok(AppConfig {
         server_address,
@@ -98,7 +102,7 @@ mod tests {
     fn test_load_config_defaults() {
         // Ensure no relevant env vars are set that might interfere
         env::remove_var("RUSTQUOTE_SERVER_ADDRESS");
-        env::remove_var("RUSTQUOTE_QUOTES_FILE_PATH");
+        let _guard_path = EnvVarGuard::new("RUSTQUOTE_QUOTES_FILE_PATH", DEFAULT_QUOTES_FILE_PATH);
 
         let config = load_config().expect("Failed to load default config");
         assert_eq!(
@@ -107,7 +111,7 @@ mod tests {
         );
         assert_eq!(
             config.quotes_file_path,
-            PathBuf::from(DEFAULT_QUOTES_FILE_PATH)
+            PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(DEFAULT_QUOTES_FILE_PATH)
         );
     }
 
@@ -122,7 +126,7 @@ mod tests {
             config.server_address,
             "127.0.0.1:3000".parse::<SocketAddr>().unwrap()
         );
-        assert_eq!(config.quotes_file_path, PathBuf::from("custom/path.json"));
+        assert_eq!(config.quotes_file_path, PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("custom/path.json"));
     }
 
     #[test]
@@ -139,7 +143,7 @@ mod tests {
     #[serial]
     fn test_load_config_partial_env_var_address_set() {
         let _guard_addr = EnvVarGuard::new("RUSTQUOTE_SERVER_ADDRESS", "127.0.0.1:7070");
-        env::remove_var("RUSTQUOTE_QUOTES_FILE_PATH"); // Use default for path
+        let _guard_path = EnvVarGuard::new("RUSTQUOTE_QUOTES_FILE_PATH", DEFAULT_QUOTES_FILE_PATH); // Use default for path
 
         let config = load_config().expect("Failed to load config with partial env vars");
         assert_eq!(
@@ -148,7 +152,7 @@ mod tests {
         );
         assert_eq!(
             config.quotes_file_path,
-            PathBuf::from(DEFAULT_QUOTES_FILE_PATH)
+            PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(DEFAULT_QUOTES_FILE_PATH)
         );
     }
 
@@ -166,7 +170,7 @@ mod tests {
         );
         assert_eq!(
             config.quotes_file_path,
-            PathBuf::from("specific/quotes_test.json")
+            PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("specific/quotes_test.json")
         );
     }
 }

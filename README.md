@@ -84,17 +84,35 @@ To use a `.env` file for local development:
 The service exposes the following API endpoints:
 
 *   **Get a Random Quote**
-    *   **Endpoint:** `GET /quote`
+    *   **Endpoint:** `GET http://localhost:31337/quote`
     *   **Description:** Retrieves a random quote.
     *   **Success Response (200 OK):**
         ```json
         {
+          "id": "unique-quote-id-123",
           "quote": "An inspiring quote text.",
           "author": "The Author"
         }
         ```
+*   **Get a Specific Quote by ID**
+    *   **Endpoint:** `GET http://localhost:31337/quote/{id}`
+    *   **Description:** Retrieves a specific quote by its unique ID.
+    *   **Success Response (200 OK):**
+        ```json
+        {
+          "id": "unique-quote-id-123",
+          "quote": "An inspiring quote text.",
+          "author": "The Author"
+        }
+        ```
+    *   **Error Response (404 Not Found):**
+        ```json
+        {
+          "error": "Quote not found"
+        }
+        ```
 *   **Health Check**
-    *   **Endpoint:** `GET /health`
+    *   **Endpoint:** `GET http://localhost:31337/health`
     *   **Description:** Returns the health status of the service.
     *   **Success Response (200 OK):**
         ```json

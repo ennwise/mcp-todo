@@ -1137,11 +1137,73 @@
             "id": "55",
             "name": "1.1.3 Create Branching Strategy Document",
             "parent_id": "15",
-            "todos": {},
-            "notes": {},
-            "status": "new",
+            "todos": {
+                "1": {
+                    "id": "1",
+                    "text": "Define the main branches (e.g., `main`/`master`, `develop`).",
+                    "done": false,
+                    "created_at": "2025-05-21T23:38:00.766Z"
+                },
+                "2": {
+                    "id": "2",
+                    "text": "Outline the process for feature branches (e.g., naming convention `feature/name`, branching from `develop`, merging back to `develop`).",
+                    "done": false,
+                    "created_at": "2025-05-21T23:38:00.766Z"
+                },
+                "3": {
+                    "id": "3",
+                    "text": "Describe the strategy for release branches (e.g., `release/vX.Y.Z`, branching from `develop`, merging to `main` and `develop`).",
+                    "done": false,
+                    "created_at": "2025-05-21T23:38:00.766Z"
+                },
+                "4": {
+                    "id": "4",
+                    "text": "Explain the policy for hotfix branches (e.g., `hotfix/issue-id`, branching from `main`, merging to `main` and `develop`).",
+                    "done": false,
+                    "created_at": "2025-05-21T23:38:00.766Z"
+                },
+                "5": {
+                    "id": "5",
+                    "text": "Specify commit message guidelines (e.g., conventional commits).",
+                    "done": false,
+                    "created_at": "2025-05-21T23:38:00.766Z"
+                },
+                "6": {
+                    "id": "6",
+                    "text": "Document pull request (PR) requirements (e.g., review process, CI checks).",
+                    "done": false,
+                    "created_at": "2025-05-21T23:38:00.766Z"
+                },
+                "7": {
+                    "id": "7",
+                    "text": "Choose a suitable location for the document (e.g., `docs/BRANCHING_STRATEGY.md` or in the project's wiki if available/preferred).",
+                    "done": false,
+                    "created_at": "2025-05-21T23:38:00.766Z"
+                },
+                "8": {
+                    "id": "8",
+                    "text": "Write the branching strategy document in Markdown format.",
+                    "done": false,
+                    "created_at": "2025-05-21T23:38:00.766Z"
+                },
+                "9": {
+                    "id": "9",
+                    "text": "Commit and push the document to the repository.",
+                    "done": false,
+                    "created_at": "2025-05-21T23:38:00.766Z"
+                }
+            },
+            "notes": {
+                "1": {
+                    "id": "1",
+                    "text": "User decision: This task (Create Branching Strategy Document) is being skipped for now due to the `technical-writer-mode` not being available for delegation. Task will remain blocked.",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:49:04.735Z"
+                }
+            },
+            "status": "blocked",
             "created_at": "2025-05-21T19:24:23.198Z",
-            "updated_at": "2025-05-21T19:24:23.198Z"
+            "updated_at": "2025-05-21T23:49:04.735Z"
         },
         "56": {
             "id": "56",
@@ -1549,11 +1611,49 @@
             "id": "60",
             "name": "3.2.4 Correct API path documentation in README.md (e.g., /quote vs /api/v1/quote)",
             "parent_id": "25",
-            "todos": {},
-            "notes": {},
-            "status": "new",
+            "todos": {
+                "1": {
+                    "id": "1",
+                    "text": "Review the current `README.md` for any existing API endpoint documentation.",
+                    "done": true,
+                    "created_at": "2025-05-21T23:49:28.168Z"
+                },
+                "2": {
+                    "id": "2",
+                    "text": "Identify the correct current API paths for `/health` and `/quote` (and `/quote/{id}` if implemented and documented). Based on Task 87, these are `/health` and `/quote`.",
+                    "done": true,
+                    "created_at": "2025-05-21T23:49:28.168Z"
+                },
+                "3": {
+                    "id": "3",
+                    "text": "Update the `README.md` to accurately reflect these API paths. Ensure clarity for users on how to access the endpoints.",
+                    "done": true,
+                    "created_at": "2025-05-21T23:49:28.168Z"
+                },
+                "4": {
+                    "id": "4",
+                    "text": "If other API details are present (e.g., request/response formats), ensure they are consistent with the current implementation.",
+                    "done": true,
+                    "created_at": "2025-05-21T23:49:28.168Z"
+                },
+                "5": {
+                    "id": "5",
+                    "text": "Commit and push the updated `README.md`.",
+                    "done": true,
+                    "created_at": "2025-05-21T23:49:28.168Z"
+                }
+            },
+            "notes": {
+                "1": {
+                    "id": "1",
+                    "text": "Updated README.md with correct API paths for /health, /quote, and /quote/{id}, including example URLs and response formats. All todos for Task 60 are now complete.",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:50:46.448Z"
+                }
+            },
+            "status": "finished",
             "created_at": "2025-05-21T19:24:23.199Z",
-            "updated_at": "2025-05-21T19:24:23.199Z"
+            "updated_at": "2025-05-21T23:50:52.094Z"
         },
         "61": {
             "id": "61",
@@ -1793,11 +1893,79 @@
             "id": "64",
             "name": "6.3.2 Add deployment step to CI pipeline (.github/workflows/rust.yml)",
             "parent_id": "35",
-            "todos": {},
-            "notes": {},
-            "status": "new",
+            "todos": {
+                "1": {
+                    "id": "1",
+                    "text": "Review the existing CI pipeline in `.github/workflows/rust.yml`.",
+                    "done": false,
+                    "created_at": "2025-05-21T23:51:34.015Z"
+                },
+                "2": {
+                    "id": "2",
+                    "text": "Add a new job or step that executes the `scripts/deploy.sh` script. This step should likely run after successful build and test steps.",
+                    "done": true,
+                    "created_at": "2025-05-21T23:51:34.015Z"
+                },
+                "3": {
+                    "id": "3",
+                    "text": "Ensure the CI environment has Docker and Docker Compose available for the deployment script to run.",
+                    "done": false,
+                    "created_at": "2025-05-21T23:51:34.015Z"
+                },
+                "4": {
+                    "id": "4",
+                    "text": "Consider if any specific environment variables or secrets are needed for this deployment step (e.g., if it were pushing to a registry, though not currently the case). For now, assume it's a local execution of `deploy.sh`.",
+                    "done": false,
+                    "created_at": "2025-05-21T23:51:34.015Z"
+                },
+                "5": {
+                    "id": "5",
+                    "text": "Modify `.github/workflows/rust.yml` to include this new deployment/execution step.",
+                    "done": true,
+                    "created_at": "2025-05-21T23:51:34.015Z"
+                },
+                "6": {
+                    "id": "6",
+                    "text": "Commit and push the changes to `.github/workflows/rust.yml`.",
+                    "done": true,
+                    "created_at": "2025-05-21T23:51:34.015Z"
+                },
+                "7": {
+                    "id": "7",
+                    "text": "Monitor the CI pipeline run on this new commit to ensure the deployment step executes (even if the `docker run` part within `deploy.sh` might be skipped or have issues due to CI environment limitations like port access, the build part should work).",
+                    "done": false,
+                    "created_at": "2025-05-21T23:51:34.015Z"
+                }
+            },
+            "notes": {
+                "1": {
+                    "id": "1",
+                    "text": "Added a new 'deploy' job to .github/workflows/rust.yml that runs after 'build_and_test' and executes ./scripts/deploy.sh. Next, I will commit and push these changes, then monitor the CI pipeline.",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:52:06.293Z"
+                },
+                "2": {
+                    "id": "2",
+                    "text": "Changes to .github/workflows/rust.yml committed and pushed with commit hash 45fba71. CI pipeline triggered. Please monitor the CI run to verify the 'deploy' job execution and successful 'docker build' within deploy.sh.",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:52:20.431Z"
+                },
+                "3": {
+                    "id": "3",
+                    "text": "Clarification needed: I do not have a direct MCP tool to monitor GitHub Actions CI status. I require manual confirmation from you regarding the outcome of the CI run for commit 45fba71, specifically if the 'deploy' job executed and if the 'docker build' part within deploy.sh succeeded.",
+                    "type": "general",
+                    "created_at": "2025-05-22T00:05:02.907Z"
+                },
+                "4": {
+                    "id": "4",
+                    "text": "The CI pipeline failed at the 'run tests' stage. This prevented the 'deploy' job from executing. The 'run tests' failure needs to be addressed before the deployment step can be verified. Task is now blocked.",
+                    "type": "general",
+                    "created_at": "2025-05-22T00:06:07.231Z"
+                }
+            },
+            "status": "blocked",
             "created_at": "2025-05-21T19:24:23.199Z",
-            "updated_at": "2025-05-21T19:24:23.199Z"
+            "updated_at": "2025-05-22T00:06:09.501Z"
         },
         "65": {
             "id": "65",
@@ -2834,11 +3002,71 @@
                     "text": "QA REGRESSION/INCOMPLETE FIX: Task 86 (QA: Verify Current Docker Setup) is BLOCKED again. `qa-director-mode` reports that while `/health` endpoint works, the `/quote` endpoint is missing the 'id' field. This suggests the fix in Task 87 (commit `a096eb2`) was incomplete or not properly reflected in the QA test. Task 87 needs to be revisited.",
                     "type": "general",
                     "created_at": "2025-05-21T23:31:29.249Z"
+                },
+                "23": {
+                    "id": "23",
+                    "text": "CRITICAL FIX (Attempt 2): Coder-mode has successfully completed Task 87 again. The missing 'id' field in the `/quote` endpoint response is now fixed by updating `QuoteResponse` struct and handlers. Commit hash is `c918754`. This should fully unblock Task 86 (QA: Verify Current Docker Setup).",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:33:49.948Z"
+                },
+                "24": {
+                    "id": "24",
+                    "text": "MAJOR SUCCESS! Task 86 (QA: Verify Current Docker Setup) is now FINISHED. `qa-director-mode` confirms all Docker operations and application endpoints (`/health`, `/quote` including 'id' field) are functioning correctly with commit `c918754`. The application is stable in its containerized environment.",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:37:34.731Z"
+                },
+                "25": {
+                    "id": "25",
+                    "text": "Addressing outstanding tasks. Task 55 is '1.1.3 Create Branching Strategy Document', currently 'new'. Will add todos and delegate to `technical-writer-mode`.",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:37:53.894Z"
+                },
+                "26": {
+                    "id": "26",
+                    "text": "Attempt to delegate Task 55 (Create Branching Strategy Document) to `technical-writer-mode` failed. The mode, although listed in user rule file `/workspaces/mcp-todo/.roo/rules/02-available-modes.md`, is reported as invalid by the `new_task` tool. This is similar to previous issues with `qa-mode` and `developer-mode`. Task 55 is now blocked pending resolution of this mode availability issue. Proposing to user to define/enable `technical-writer-mode`.",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:38:26.844Z"
+                },
+                "27": {
+                    "id": "27",
+                    "text": "User decision: Skip creating the Branching Strategy Document (Task 55) for now, due to `technical-writer-mode` not being available for delegation. Task 55 will remain blocked.",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:48:54.001Z"
+                },
+                "28": {
+                    "id": "28",
+                    "text": "Addressing Task 60 ('Correct API path documentation in README.md'). It is 'new'. Since `technical-writer-mode` is unavailable, I will propose to the user that `coder-mode` handles this README update.",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:49:20.616Z"
+                },
+                "29": {
+                    "id": "29",
+                    "text": "User approved assigning Task 60 (Correct API path documentation in README.md) to `coder-mode` due to `technical-writer-mode` unavailability. Proceeding with delegation.",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:50:16.486Z"
+                },
+                "30": {
+                    "id": "30",
+                    "text": "Coder-mode has successfully completed Task 60 (Correct API path documentation in README.md). The README now accurately reflects the current API endpoints and their usage.",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:51:08.668Z"
+                },
+                "31": {
+                    "id": "31",
+                    "text": "Addressing Task 64 ('Add deployment step to CI pipeline'). It is 'new'. This involves CI/CD pipeline modifications. Will add todos and delegate to `coder-mode` as it has handled CI file changes previously.",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:51:24.132Z"
+                },
+                "32": {
+                    "id": "32",
+                    "text": "Task 64 (Add deployment step to CI) is BLOCKED. Coder-mode (commit `45fba71`) added the deploy job, but the CI pipeline is failing at the 'run tests' stage, preventing the deploy job from being reached. A new task is required to fix the 'run tests' stage in `.github/workflows/rust.yml`.",
+                    "type": "general",
+                    "created_at": "2025-05-22T00:06:24.061Z"
                 }
             },
             "status": "in progress",
             "created_at": "2025-05-21T22:00:22.402Z",
-            "updated_at": "2025-05-21T23:31:29.249Z"
+            "updated_at": "2025-05-22T00:06:24.061Z"
         },
         "78": {
             "id": "78",
@@ -3500,11 +3728,65 @@
                     "text": "Step 8: Overall re-verification result: BLOCKED. While the `/health` endpoint and Docker operations are successful, the `/quote` endpoint is MISSING the expected 'id' field. The response was: `{\"quote\":\"The future belongs to those who believe in the beauty of their dreams.\",\"author\":\"Eleanor Roosevelt\"}`. This indicates the changes from commit a096eb2 related to the 'id' field are not reflected in the running application. All verification steps were executed.",
                     "type": "general",
                     "created_at": "2025-05-21T23:30:50.333Z"
+                },
+                "31": {
+                    "id": "31",
+                    "text": "Starting Task 86 (3rd attempt): Final QA verification of Docker setup and application endpoints (/health, /quote), ensuring commit c918754 changes are included and /quote response contains 'id' field.",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:34:22.056Z"
+                },
+                "32": {
+                    "id": "32",
+                    "text": "Step 1/8 (Todo 1) COMPLETED: Ensured no previous instances of `rustquote-service` containers or conflicting port usage exist by running `docker compose down --remove-orphans`. Output indicates successful removal of container and network.",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:34:49.184Z"
+                },
+                "33": {
+                    "id": "33",
+                    "text": "Step 2/8 (Todo 2) COMPLETED: Built Docker image using `docker compose build rustquote-service`. Build process finished successfully, image mcp-todo-rustquote-service is ready.",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:35:09.120Z"
+                },
+                "34": {
+                    "id": "34",
+                    "text": "Step 3/8 (Todo 3) COMPLETED: Ran the service using `docker compose up -d rustquote-service`. Output confirms container rustquote-container-31337 started successfully.",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:35:26.932Z"
+                },
+                "35": {
+                    "id": "35",
+                    "text": "Step 4/8 (Todo 4) COMPLETED: Verified '/health' endpoint. `curl -i http://localhost:31337/health` returned HTTP 200 OK with body: {\"status\":\"healthy\"}.",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:35:42.244Z"
+                },
+                "36": {
+                    "id": "36",
+                    "text": "Step 5/8 (Todo 5) COMPLETED: Verified '/quote' endpoint. `curl -i http://localhost:31337/quote` returned HTTP 200 OK with body: {\"id\":1,\"quote\":\"The only way to do great work is to love what you do.\",\"author\":\"Steve Jobs\"}. The 'id' field is present as expected.",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:35:58.942Z"
+                },
+                "37": {
+                    "id": "37",
+                    "text": "Step 6/8 (Todo 6) COMPLETED: Verified logs using `./scripts/view_logs.sh`. Logs show successful server start, configuration load, and quote retrieval. No new errors observed.",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:36:18.042Z"
+                },
+                "38": {
+                    "id": "38",
+                    "text": "Step 7/8 (Todo 7) COMPLETED: Stopped the service using `docker compose down`. Output confirms container and network removed successfully.",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:36:45.459Z"
+                },
+                "39": {
+                    "id": "39",
+                    "text": "Step 8/8 (Todo 8) COMPLETED: Overall QA verification for Task 86 (3rd attempt) is SUCCESSFUL. All Docker setup and application endpoint checks passed. The /health and /quote endpoints are functioning correctly, and the /quote response includes the 'id' field as required by commit c918754.",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:37:02.548Z"
                 }
             },
-            "status": "blocked",
+            "status": "finished",
             "created_at": "2025-05-21T23:09:52.806Z",
-            "updated_at": "2025-05-21T23:31:09.183Z"
+            "updated_at": "2025-05-21T23:37:16.813Z"
         },
         "87": {
             "id": "87",
@@ -3574,43 +3856,43 @@
                 "11": {
                     "id": "11",
                     "text": "Verify the current content of `data/quotes.json` to ensure `id` fields are present, correctly formatted, and unique for each quote object.",
-                    "done": false,
+                    "done": true,
                     "created_at": "2025-05-21T23:32:05.560Z"
                 },
                 "12": {
                     "id": "12",
                     "text": "Inspect the `Quote` struct in `rustquote_service/src/models.rs` to ensure it includes the `id` field and that it's properly configured for serialization (e.g., with `serde::Serialize`).",
-                    "done": false,
+                    "done": true,
                     "created_at": "2025-05-21T23:32:05.560Z"
                 },
                 "13": {
                     "id": "13",
                     "text": "Examine the handler function for the `/quote` endpoint in `rustquote_service/src/lib.rs` to ensure it correctly selects a quote (including its `id`) and that the `id` is part of the data being serialized and returned.",
-                    "done": false,
+                    "done": true,
                     "created_at": "2025-05-21T23:32:05.560Z"
                 },
                 "14": {
                     "id": "14",
                     "text": "Implement any necessary fixes to `data/quotes.json`, the `Quote` struct, or the `/quote` handler function to ensure the `id` field is consistently included in the response.",
-                    "done": false,
+                    "done": true,
                     "created_at": "2025-05-21T23:32:05.560Z"
                 },
                 "15": {
                     "id": "15",
                     "text": "Test the fix locally by running the service in Docker (`docker compose up -d`) and using `curl http://localhost:31337/quote`. Verify the JSON response now includes the `id` field for the quote.",
-                    "done": false,
+                    "done": true,
                     "created_at": "2025-05-21T23:32:05.560Z"
                 },
                 "16": {
                     "id": "16",
                     "text": "Commit and push the changes with an appropriate message.",
-                    "done": false,
+                    "done": true,
                     "created_at": "2025-05-21T23:32:05.560Z"
                 },
                 "17": {
                     "id": "17",
                     "text": "Report the new commit hash in a note on this task.",
-                    "done": false,
+                    "done": true,
                     "created_at": "2025-05-21T23:32:05.560Z"
                 }
             },
@@ -3632,11 +3914,83 @@
                     "text": "Changes committed. Commit hash: `a096eb2`. Please push these changes to the repository.",
                     "type": "general",
                     "created_at": "2025-05-21T23:28:22.841Z"
+                },
+                "4": {
+                    "id": "4",
+                    "text": "Fix for missing 'id' field in /quote endpoint response has been implemented and committed. New commit hash: `c918754`.",
+                    "type": "general",
+                    "created_at": "2025-05-21T23:33:27.632Z"
+                }
+            },
+            "status": "finished",
+            "created_at": "2025-05-21T23:16:15.099Z",
+            "updated_at": "2025-05-21T23:33:35.333Z"
+        },
+        "88": {
+            "id": "88",
+            "name": "Fix Failing 'run tests' Stage in CI Pipeline (.github/workflows/rust.yml)",
+            "parent_id": "64",
+            "todos": {
+                "1": {
+                    "id": "1",
+                    "text": "Examine the CI pipeline logs for commit `45fba71` (from Task 64) to identify the specific errors causing the 'run tests' stage to fail.",
+                    "done": false,
+                    "created_at": "2025-05-22T00:06:40.581Z"
+                },
+                "2": {
+                    "id": "2",
+                    "text": "Analyze the test failure. Determine if it's due to code changes, test environment issues, or problems with the test suite itself.",
+                    "done": false,
+                    "created_at": "2025-05-22T00:06:40.581Z"
+                },
+                "3": {
+                    "id": "3",
+                    "text": "Implement necessary fixes to the application code, test code, or the CI workflow (`.github/workflows/rust.yml`) to resolve the test failures.",
+                    "done": false,
+                    "created_at": "2025-05-22T00:06:40.581Z"
+                },
+                "4": {
+                    "id": "4",
+                    "text": "Run tests locally (e.g., `cargo test --all-targets`) to verify the fix before pushing.",
+                    "done": false,
+                    "created_at": "2025-05-22T00:06:40.581Z"
+                },
+                "5": {
+                    "id": "5",
+                    "text": "Commit and push the changes with an appropriate message.",
+                    "done": false,
+                    "created_at": "2025-05-22T00:06:40.581Z"
+                },
+                "6": {
+                    "id": "6",
+                    "text": "Monitor the CI pipeline run on this new commit to ensure the 'run tests' stage now passes.",
+                    "done": false,
+                    "created_at": "2025-05-22T00:06:40.581Z"
+                },
+                "7": {
+                    "id": "7",
+                    "text": "Report the new commit hash and the CI outcome in a note on this task.",
+                    "done": false,
+                    "created_at": "2025-05-22T00:06:40.581Z"
+                }
+            },
+            "notes": {
+                "1": {
+                    "id": "1",
+                    "text": "Failed to launch browser to view CI logs due to missing shared library (libglib-2.0.so.0). I need the CI pipeline logs for commit `45fba71`, specifically for the 'run tests' stage, to proceed with Task 88.",
+                    "type": "general",
+                    "created_at": "2025-05-22T00:08:44.712Z"
+                },
+                "2": {
+                    "id": "2",
+                    "text": "Unable to obtain CI logs. Attempting to reproduce the 'run tests' stage failure locally by running `cargo test --all-targets`.",
+                    "type": "general",
+                    "created_at": "2025-05-22T00:09:08.383Z"
                 }
             },
             "status": "in progress",
-            "created_at": "2025-05-21T23:16:15.099Z",
-            "updated_at": "2025-05-21T23:32:05.560Z"
+            "created_at": "2025-05-22T00:06:34.188Z",
+            "updated_at": "2025-05-22T00:09:08.383Z"
         }
     }
 }
