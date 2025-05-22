@@ -171,6 +171,8 @@ Alternatively, you can build and run the Docker image manually:
 
 ## CI Pipeline
 
+[![Rust CI](https://github.com/ennwise/mcp-todo/actions/workflows/rust.yml/badge.svg)](https://github.com/ennwise/mcp-todo/actions/workflows/rust.yml)
+
 A Continuous Integration (CI) pipeline is set up using GitHub Actions. The workflow is defined in [`.github/workflows/rust.yml`](.github/workflows/rust.yml:0).
 
 The CI pipeline includes the following jobs and key steps:
