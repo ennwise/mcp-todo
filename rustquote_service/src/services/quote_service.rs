@@ -263,4 +263,58 @@ mod tests {
         let quote = get_quote_by_id(&quotes, 1);
         assert!(quote.is_none());
     }
+    #[test]
+    fn test_get_quote_by_id_zero() {
+        let quotes = vec![
+            Quote { id: 0, text: "Quote 0".to_string(), author: "Author 0".to_string(), source: None },
+            Quote { id: 1, text: "Quote 1".to_string(), author: "Author 1".to_string(), source: None },
+        ];
+        let quote = get_quote_by_id(&quotes, 0);
+        assert!(quote.is_some());
+        assert_eq!(quote.unwrap().id, 0);
+    }
+
+    #[test]
+    fn test_get_quote_by_id_large_id_not_found() {
+        let quotes = vec![
+            Quote { id: 1, text: "Quote 1".to_string(), author: "Author 1".to_string(), source: None },
+            Quote { id: 2, text: "Quote 2".to_string(), author: "Author 2".to_string(), source: None },
+        ];
+        let quote = get_quote_by_id(&quotes, u32::MAX);
+        assert!(quote.is_none());
+    }
+
+    #[test]
+    fn test_get_quote_by_id_middle_of_list() {
+        let quotes = vec![
+            Quote { id: 1, text: "Quote 1".to_string(), author: "Author 1".to_string(), source: None },
+            Quote { id: 2, text: "Quote 2".to_string(), author: "Author 2".to_string(), source: None },
+            Quote { id: 3, text: "Quote 3".to_string(), author: "Author 3".to_string(), source: None },
+        ];
+        let quote = get_quote_by_id(&quotes, 2);
+        assert!(quote.is_some());
+        assert_eq!(quote.unwrap().id, 2);
+    }
+
+    #[test]
+    fn test_get_quote_by_id_first_in_list() {
+        let quotes = vec![
+            Quote { id: 1, text: "Quote 1".to_string(), author: "Author 1".to_string(), source: None },
+            Quote { id: 2, text: "Quote 2".to_string(), author: "Author 2".to_string(), source: None },
+        ];
+        let quote = get_quote_by_id(&quotes, 1);
+        assert!(quote.is_some());
+        assert_eq!(quote.unwrap().id, 1);
+    }
+
+    #[test]
+    fn test_get_quote_by_id_last_in_list() {
+        let quotes = vec![
+            Quote { id: 1, text: "Quote 1".to_string(), author: "Author 1".to_string(), source: None },
+            Quote { id: 2, text: "Quote 2".to_string(), author: "Author 2".to_string(), source: None },
+        ];
+        let quote = get_quote_by_id(&quotes, 2);
+        assert!(quote.is_some());
+        assert_eq!(quote.unwrap().id, 2);
+    }
 }
