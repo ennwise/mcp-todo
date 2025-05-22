@@ -3986,11 +3986,23 @@
                     "text": "Unable to obtain CI logs. Attempting to reproduce the 'run tests' stage failure locally by running `cargo test --all-targets`.",
                     "type": "general",
                     "created_at": "2025-05-22T00:09:08.383Z"
+                },
+                "3": {
+                    "id": "3",
+                    "text": "Changes committed and pushed with commit hash `3361a37`. Please monitor the CI pipeline for this commit and confirm if the 'run tests' stage passes.",
+                    "type": "general",
+                    "created_at": "2025-05-22T00:16:57.140Z"
+                },
+                "4": {
+                    "id": "4",
+                    "text": "CI pipeline failed due to `cargo fmt --check` failure. Fixing formatting issues locally with `cargo fmt`.",
+                    "type": "general",
+                    "created_at": "2025-05-22T00:22:10.621Z"
                 }
             },
             "status": "in progress",
             "created_at": "2025-05-22T00:06:34.188Z",
-            "updated_at": "2025-05-22T00:09:08.383Z"
+            "updated_at": "2025-05-22T00:22:10.621Z"
         }
     }
 }

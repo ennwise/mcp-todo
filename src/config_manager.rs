@@ -126,7 +126,10 @@ mod tests {
             config.server_address,
             "127.0.0.1:3000".parse::<SocketAddr>().unwrap()
         );
-        assert_eq!(config.quotes_file_path, PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("custom/path.json"));
+        assert_eq!(
+            config.quotes_file_path,
+            PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("custom/path.json")
+        );
     }
 
     #[test]
